@@ -70,14 +70,15 @@ public class FontLoader extends CoModule {
 	 * @return The {@link Font} that was loaded, or null if one is not found.
 	 */
 	@Nullable
-	public Font loadFont(String fontName){
+	private Font loadFont(String fontName){
 
 		try {
-			if (!fontFiles.containsKey(fontName.toLowerCase())){
+			File fontFile = fontFiles.get(fontName.toLowerCase());
+
+			if (fontFile == null){
 				return null;
 			}
 
-			File fontFile = fontFiles.get(fontName.toLowerCase());
 			InputStream inputStream = new FileInputStream(fontFile);
 			return Font.createFont(Font.TRUETYPE_FONT, inputStream);
 

@@ -17,6 +17,8 @@ public class TTBCommands {
 			min = 1
 	)
 	public void command(CommandSender sender, String alias, String[] args) {
+
+
 		return;
 	}
 
