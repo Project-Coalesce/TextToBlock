@@ -2,7 +2,7 @@ name: TextToBlock
 version: 1.0
 main: com.coalesce.ttb.TextToBlock
 author: ProjectCoalesce
-depend: CoalesceCore
+depend: [CoalesceCore]
 commands:
     text:
         description: Main TTB command

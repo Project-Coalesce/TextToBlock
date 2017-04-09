@@ -2,16 +2,9 @@ package com.coalesce.ttb.commands;
 
 import com.coalesce.command.registry.Cmd;
 import com.coalesce.command.registry.Executor;
-import com.coalesce.ttb.TextToBlock;
 import org.bukkit.command.CommandSender;
 
 public class TTBCommands {
-
-	private TextToBlock plugin;
-
-	public TTBCommands(TextToBlock plugin){
-		this.plugin = plugin;
-	}
 
 	@Cmd(
 			name = "text",

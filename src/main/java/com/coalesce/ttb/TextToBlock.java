@@ -16,8 +16,7 @@ public final class TextToBlock extends CoPlugin {
 		addModules(fontLoader = new FontLoader(this));
 
 		//Add commands
-		TTBCommands ttbCommands = new TTBCommands(this);
-		CommandLoader.addCommand(ttbCommands.getClass());
+		CommandLoader.addCommand(TTBCommands.class);
 	}
 
 	@Override

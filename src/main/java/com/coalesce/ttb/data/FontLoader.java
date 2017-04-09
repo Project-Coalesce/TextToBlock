@@ -40,7 +40,6 @@ public class FontLoader extends CoModule {
 	protected void onDisable() throws Exception {
 
 		//TODO: Stilbruch 4/9/2017 Unload things if needed.
-
 	}
 
 	/**
