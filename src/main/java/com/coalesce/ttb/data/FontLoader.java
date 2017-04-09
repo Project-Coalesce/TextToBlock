@@ -2,11 +2,14 @@ package com.coalesce.ttb.data;
 
 import com.coalesce.plugin.CoModule;
 import com.coalesce.plugin.CoPlugin;
+import com.coalesce.ttb.TextToBlock;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -30,7 +33,9 @@ public class FontLoader extends CoModule {
 
 	@Override
 	protected void onEnable() throws Exception {
-		fontFiles = Arrays.asList(new File(getPlugin().getDataFolder(), "fonts").listFiles((dir, name) -> name.endsWith(".ttf")))
+
+		//Get all the files in the fonts folder
+		fontFiles = Arrays.asList(getPlugin().getTtbConfiguration().getFontFolder().listFiles((dir, name) -> name.endsWith(".ttf")))
 				.stream().collect(Collectors.toMap(file -> file.getName().toLowerCase(), file -> file));
 
 		executor = Executors.newSingleThreadExecutor();
@@ -85,6 +90,11 @@ public class FontLoader extends CoModule {
 		}
 
 		return null;
+	}
+
+	@Override
+	public TextToBlock getPlugin(){
+		return (TextToBlock) super.getPlugin();
 	}
 
 }

@@ -7,14 +7,18 @@ import java.io.File;
  */
 public class Configuration {
 
-	private File fontfolder, path;
+	private File fontFolder;
 
 	public Configuration() {
-		this.fontfolder = new File("plugins" + File.separator + "TextToBlock" + File.separator + "Fonts");
+		this.fontFolder = new File("plugins" + File.separator + "TextToBlock" + File.separator + "fonts");
+
+		//Incase this is the first time running
+		if (!fontFolder.exists()){
+			fontFolder.mkdirs();
+		}
 	}
 
-	public File[] getFonts() {
-		return fontfolder.listFiles();
+	public File getFontFolder() {
+		return fontFolder;
 	}
-
 }

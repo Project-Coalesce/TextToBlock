@@ -1,6 +1,6 @@
 package com.coalesce.ttb.blocks;
 
-import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
 import sun.font.FontDesignMetrics;
 
@@ -11,9 +11,9 @@ import java.util.Set;
 
 public class TTBConverter {
 
-	public static Set<Vector> getTextBlocks(String text, Font font, Location origin) {
+	public static Set<Vector> getTextBlocks(String text, Font font, Block origin) {
 
-		Vector originVector = origin.toVector();
+		Vector originVector = origin.getLocation().toVector();
 		Set<Vector> textLocations = new HashSet<>();
 
 		FontMetrics fontMetrics = FontDesignMetrics.getMetrics(font);
