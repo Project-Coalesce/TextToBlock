@@ -13,10 +13,11 @@ public final class TextToBlock extends CoPlugin {
 	public void onPluginEnable() throws Exception {
 
 		//Register Modules
-		addModules(fontLoader = new FontLoader(this, "Font Loader"));
+		addModules(fontLoader = new FontLoader(this));
 
 		//Add commands
-		CommandLoader.addCommand(TTBCommands.class);
+		TTBCommands ttbCommands = new TTBCommands(this);
+		CommandLoader.addCommand(ttbCommands.getClass());
 	}
 
 	@Override
