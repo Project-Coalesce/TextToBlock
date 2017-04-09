@@ -12,6 +12,16 @@
 
     <artifactId>TextToBlock</artifactId>
     <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!--Core-->
+        <dependency>
+            <groupId>com.coalesce</groupId>
+            <artifactId>Core</artifactId>
+            <version>LATEST</version>
+        </dependency>
+    </dependencies>
 
 
 </project>
