@@ -25,4 +25,5 @@ public class FontLoader extends CoModule {
     protected void onDisable() throws Exception {
         //Do anything we need to do to save font data
     }
+
 }

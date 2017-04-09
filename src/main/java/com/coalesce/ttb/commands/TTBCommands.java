@@ -8,16 +8,16 @@ import org.bukkit.command.CommandSender;
  * Created by NJDaeger on 4/9/2017.
  */
 public class TTBCommands {
-    
-    @Cmd(
-           name = "text",
-           desc = "This will be the desc",
-           usage = "/text <message> -b(block) -s(size) -f(font) -t(thickness)",
-           executor = Executor.PLAYER,
-           min = 1
-    )
-    public void command(CommandSender sender, String alias, String[] args) {
-        return;
-    }
-    
+
+	@Cmd(
+			name = "text",
+			desc = "This will be the desc",
+			usage = "/text <message> -b(block) -s(size) -f(font) -t(thickness)",
+			executor = Executor.PLAYER,
+			min = 1
+	)
+	public void command(CommandSender sender, String alias, String[] args) {
+		return;
+	}
+
 }
