@@ -2,8 +2,8 @@ package com.coalesce.ttb.blocks;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
+import sun.font.FontDesignMetrics;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
@@ -16,8 +16,7 @@ public class TTBConverter {
 		Vector originVector = origin.toVector();
 		Set<Vector> textLocations = new HashSet<>();
 
-		//Jlabel is only needed so we can gen the metrics
-		FontMetrics fontMetrics = new JLabel().getFontMetrics(font);
+		FontMetrics fontMetrics = FontDesignMetrics.getMetrics(font);
 
 		int baseTextHeight = fontMetrics.getHeight();
 		int baseTextWidth = fontMetrics.stringWidth(text);
