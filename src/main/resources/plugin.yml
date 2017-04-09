@@ -1,4 +1,5 @@
 name: TextToBlock
 version: 1.0
 main: com.coalesce.ttb.TextToBlock
-author: Sxtanna
+author: ProjectCoalesce
+depend: CoalesceCore
