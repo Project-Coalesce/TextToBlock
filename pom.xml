@@ -22,6 +22,20 @@
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--Restating and excluding dependencies-->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${versionAnnotations}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.moandjiezana.toml</groupId>
+            <artifactId>toml4j</artifactId>
+            <version>0.7.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 
