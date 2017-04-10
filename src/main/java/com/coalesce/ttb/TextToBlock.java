@@ -55,7 +55,7 @@ public final class TextToBlock extends CoPlugin {
 			String fontName = args[0];
 			int fontSize = Integer.parseInt(args[1]);
 
-			String message = String.join("", Arrays.copyOfRange(args, 2, args.length));
+			String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
 			fontLoader.loadFont(fontName, font -> {
 
