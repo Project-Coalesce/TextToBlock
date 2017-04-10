@@ -1,8 +1,6 @@
 package com.coalesce.ttb;
 
-import com.coalesce.command.CommandLoader;
 import com.coalesce.plugin.CoPlugin;
-import com.coalesce.ttb.commands.TTBCommands;
 import com.coalesce.ttb.data.Configuration;
 import com.coalesce.ttb.data.FontLoader;
 
@@ -19,9 +17,6 @@ public final class TextToBlock extends CoPlugin {
 
 		//Register Modules
 		addModules(fontLoader = new FontLoader(this));
-
-		//Add commands
-		CommandLoader.addCommand(TTBCommands.class);
 	}
 
 	@Override
