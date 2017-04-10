@@ -8,8 +8,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -36,7 +34,7 @@ public class FontLoader extends CoModule {
 
 		//Get all the files in the fonts folder
 		fontFiles = Arrays.asList(getPlugin().getTtbConfiguration().getFontFolder().listFiles((dir, name) -> name.endsWith(".ttf")))
-				.stream().collect(Collectors.toMap(file -> file.getName().toLowerCase(), file -> file));
+				.stream().collect(Collectors.toMap(file -> file.getName().toLowerCase().replace(".ttf", ""), file -> file));
 
 		executor = Executors.newSingleThreadExecutor();
 	}
@@ -81,8 +79,7 @@ public class FontLoader extends CoModule {
 				return null;
 			}
 
-			InputStream inputStream = new FileInputStream(fontFile);
-			return Font.createFont(Font.TRUETYPE_FONT, inputStream);
+			return Font.createFont(Font.TRUETYPE_FONT, fontFile);
 
 		} catch (Exception e) {
 			error("Error loading font: "+ fontName);
