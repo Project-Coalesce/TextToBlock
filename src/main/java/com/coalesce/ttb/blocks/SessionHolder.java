@@ -13,16 +13,10 @@ public class SessionHolder {
     //A map of all the current user sessions.
     private final Map<UUID, TextSession> sessionMap = new HashMap<>();
     
-    //Plugin instance.
-    private TextToBlock plugin;
-    
     /**
      * The text session holder.
-     * @param plugin Plugin instance.
      */
-    public SessionHolder(TextToBlock plugin) {
-        this.plugin = plugin;
-    }
+    public SessionHolder() {}
     
     /**
      * Gets a session from a user.
@@ -58,7 +52,9 @@ public class SessionHolder {
         //User
         private UUID user;
         
+        //Sets of blocks.
         private Set<BlockState> blocks;
+        
         //The user's undoable history.
         private final Stack<Set<BlockState>> undoMap = new Stack<>();
         
@@ -69,7 +65,7 @@ public class SessionHolder {
          * Creates a new TextSession for the user.
          * @param user User to create session for.
          */
-        public TextSession(UUID user) {
+        private TextSession(UUID user) {
             this.user = user;
         }
     
@@ -88,44 +84,72 @@ public class SessionHolder {
     
         /**
          * Undos the last operation done by the user.
+         *
+         * @return True if operation successful, false otherwise.
          */
-        public void undo() {
+        public boolean undo() {
+            if (undoMap.isEmpty()) {
+                return false;
+            }
             this.blocks = undoMap.peek();
             redoMap.push(this.blocks);
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                undoMap.pop().forEach(state -> {
-                    state.getBlock().setType(state.getType());
-                });
+            undoMap.pop().forEach(state -> {
+                state.getBlock().setType(state.getType());
             });
+            return true;
         }
     
         /**
          * Undos an operation at a certain index.
          * @param operation The operation index.
+         *
+         * @return True if operation successful, false otherwise.
          */
-        public void undo(int operation) {
+        public boolean undo(int operation) {
+            if (undoMap.get(operation).isEmpty()) {
+                return false;
+            }
             this.blocks = undoMap.get(operation);
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                blocks.forEach(state -> {
-                    state.getBlock().setType(state.getType());
-                });
+            blocks.forEach(state -> {
+                state.getBlock().setType(state.getType());
             });
             redoMap.push(this.blocks);
+            return true;
         }
     
         /**
          * Redos the last operation.
+         *
+         * @return True if operation successful, false otherwise.
          */
-        public void redo() {
-            
+        public boolean redo() {
+            if (redoMap.isEmpty()) {
+                return false;
+            }
+            this.blocks = redoMap.peek();
+            undoMap.push(this.blocks);
+            redoMap.pop().forEach(state -> {
+                state.getBlock().setType(state.getType());
+            });
+            return true;
         }
     
         /**
          * Redos an operation at a certain index.
          * @param operation The operation index.
+         *
+         * @return True if operation successful, false otherwise.
          */
-        public void redo(int operation) {
-            
+        public boolean redo(int operation) {
+            if (redoMap.get(operation).isEmpty()) {
+                return false;
+            }
+            this.blocks = redoMap.get(operation);
+            blocks.forEach(state -> {
+                state.getBlock().setType(state.getType());
+            });
+            undoMap.push(this.blocks);
+            return true;
         }
     }
 }

@@ -29,7 +29,7 @@ public final class TextToBlock extends CoPlugin {
 		ttbConfiguration = new Configuration();
 		
 		//SessionHolder instance
-		sessionHolder = new SessionHolder(this);
+		sessionHolder = new SessionHolder();
 
 		//Register Modules
 		addModules(fontLoader = new FontLoader(this));
@@ -48,7 +48,7 @@ public final class TextToBlock extends CoPlugin {
 	        if (!(sender instanceof Player)) {
 	            return false;
             }
-            getSessionHolder().getSession(((Player)sender).getUniqueId()).undo();
+            if (!getSessionHolder().getSession(((Player)sender).getUniqueId()).undo()) sender.sendMessage("Cannot perform undo operation.");
         }
 		if (command.getName().equalsIgnoreCase("text")){
 
