@@ -2,18 +2,18 @@ package com.coalesce.ttb.data;
 
 import com.coalesce.plugin.CoModule;
 import com.coalesce.plugin.CoPlugin;
-import com.coalesce.ttb.TextToBlock;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.io.File;
-import java.util.Arrays;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * FontLoader loads in fonts stored in the /fonts folder and stores them
@@ -21,77 +21,49 @@ import java.util.stream.Collectors;
  */
 public class FontLoader extends CoModule {
 
-	private Map<String, File> fontFiles;
+	private static final Executor EXECUTOR = Executors.newCachedThreadPool();
 
-	private ExecutorService executor;
+
+	private final Map<String, File> foundFonts = new HashMap<>();
 
 	public FontLoader(@NotNull CoPlugin plugin) {
 		super(plugin, "Font Loader");
 	}
 
+
 	@Override
 	protected void onEnable() throws Exception {
+		File fontsFolder = new File(getPlugin().getDataFolder(), "Fonts");
+		if (!fontsFolder.exists()) fontsFolder.mkdirs();
 
-		//Get all the files in the fonts folder
-		fontFiles = Arrays.asList(getPlugin().getTtbConfiguration().getFontFolder().listFiles((dir, name) -> name.endsWith(".ttf")))
-				.stream().collect(Collectors.toMap(file -> file.getName().toLowerCase().replace(".ttf", ""), file -> file));
+		File[] fontFiles = fontsFolder.listFiles(((dir, name) -> name.endsWith(".ttf")));
+		if (fontFiles == null) return;
 
-		executor = Executors.newSingleThreadExecutor();
+		Stream.of(fontFiles).forEach(file -> foundFonts.put(file.getName().split(".")[0].toLowerCase(), file));
 	}
 
 	@Override
 	protected void onDisable() throws Exception {
-
-		//TODO: Stilbruch 4/9/2017 Unload things if needed.
+		foundFonts.clear();
 	}
 
-	/**
-	 *  Threadsafe way to load in a {@link Font}. Once the file is loaded, callback is
-	 *  called.
-	 *
-	 * @param fontName Name of the font to load in
-	 * @param callback callback to call once the font is loaded
-	 */
-	public void loadFont(String fontName, Consumer<Font> callback){
 
-		executor.execute(() -> {
-
-			Font font = loadFont(fontName);
-			callback.accept(font);
-
-		});
+	public void loadFont(String fontName, Consumer<Font> callback) {
+		EXECUTOR.execute(() -> callback.accept(loadFont(fontName)));
 	}
 
-	/**
-	 * Loads in the fonts in an unsafe way. Using this can lock up threads. It is recommended that you
-	 * use {@link FontLoader#loadFont(String, Consumer)} instead, as it is tread safe.
-	 *
-	 * @param fontName The name of the file to load
-	 * @return The {@link Font} that was loaded, or null if one is not found.
-	 */
-	@Nullable
-	private Font loadFont(String fontName){
+	private @Nullable Font loadFont(@NotNull String fontName) {
+		File fontFile = foundFonts.get(fontName.toLowerCase());
+		if (fontFile == null) return null;
 
 		try {
-			File fontFile = fontFiles.get(fontName.toLowerCase());
-
-			if (fontFile == null){
-				return null;
-			}
-
 			return Font.createFont(Font.TRUETYPE_FONT, fontFile);
-
-		} catch (Exception e) {
-			error("Error loading font: "+ fontName);
+		} catch (FontFormatException | IOException e) {
+			error("Failed to load font " + fontName);
 			e.printStackTrace();
 		}
 
 		return null;
-	}
-
-	@Override
-	public TextToBlock getPlugin(){
-		return (TextToBlock) super.getPlugin();
 	}
 
 }
