@@ -29,9 +29,9 @@ public class TTBConverter {
 		imageGraphics.drawString(text, bufferedImage.getMinX(), height);
 		imageGraphics.dispose();
 
-		//Start from the top since the image is upsidedown
-		for (int y = 0; y < bufferedImage.getHeight(); y++) {
-			for (int x = 0; x < bufferedImage.getWidth(); x++) {
+		//Start from the top since the image is up-side-down
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
 
 				// White (0) is the background. Anything else is a pixel we want
 				if (bufferedImage.getRGB(x, y) != 0) {

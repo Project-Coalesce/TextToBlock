@@ -1,7 +1,10 @@
 package com.coalesce.ttb;
 
+import com.coalesce.Core;
+import com.coalesce.command.CommandModule;
 import com.coalesce.plugin.CoPlugin;
 import com.coalesce.ttb.blocks.SessionHolder;
+import com.coalesce.ttb.commands.TTBCommands;
 import com.coalesce.ttb.config.FontsConfig;
 import com.coalesce.ttb.data.FontLoader;
 
@@ -23,15 +26,21 @@ public final class TextToBlock extends CoPlugin {
 
 	@Override
 	public void onPluginEnable() throws Exception {
-		addModules(fontLoader = new FontLoader(this), sessionHolder = new SessionHolder(this));
+
+		// temporary
+		CommandModule commands = getServer().getServicesManager().load(Core.class).getCommandModule();
+
+		addModules(
+				fontLoader = new FontLoader(this),
+				sessionHolder = new SessionHolder(this),
+				new TTBCommands(this, commands, sessionHolder));
 	}
 
 	@Override
 	public void onPluginDisable() throws Exception {
 
 	}
-
-
+	
 	public FontsConfig getFontsConfig() {
 		return fontsConfig;
 	}
