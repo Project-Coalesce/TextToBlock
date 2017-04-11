@@ -38,8 +38,8 @@ public class FontLoader extends CoModule {
 
 		File[] fontFiles = fontsFolder.listFiles(((dir, name) -> name.endsWith(".ttf")));
 		if (fontFiles == null) return;
-
-		Stream.of(fontFiles).forEach(file -> foundFonts.put(file.getName().split(".")[0].toLowerCase(), file));
+		
+		Stream.of(fontFiles).forEach(file -> foundFonts.put(file.getName().replace(".ttf", ""), file));
 	}
 
 	@Override
