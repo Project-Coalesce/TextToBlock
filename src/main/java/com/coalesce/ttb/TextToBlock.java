@@ -30,15 +30,17 @@ public final class TextToBlock extends CoPlugin {
 		// temporary
 		CommandModule commands = getServer().getServicesManager().load(Core.class).getCommandModule();
 
-		addModules(fontLoader = new FontLoader(this), sessionHolder = new SessionHolder(this), new TTBCommands(this, commands));
+		addModules(
+				fontLoader = new FontLoader(this),
+				sessionHolder = new SessionHolder(this),
+				new TTBCommands(this, commands, sessionHolder));
 	}
 
 	@Override
 	public void onPluginDisable() throws Exception {
 
 	}
-
-
+	
 	public FontsConfig getFontsConfig() {
 		return fontsConfig;
 	}
