@@ -17,14 +17,13 @@ public final class TextToBlock extends CoPlugin {
 
 	@Override
 	public boolean onPreEnable() {
-		fontsConfig = FontsConfig.load(new File(getDataFolder(), "Fonts"));
+		fontsConfig = FontsConfig.load(new File(getDataFolder(), "FontsConfig.toml"));
 		return super.onPreEnable();
 	}
 
 	@Override
 	public void onPluginEnable() throws Exception {
 		addModules(fontLoader = new FontLoader(this), sessionHolder = new SessionHolder(this));
-
 	}
 
 	@Override
