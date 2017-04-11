@@ -45,15 +45,27 @@ public final class TTBCommands extends CoModule {
 	}
     
     private void undo(CmdContext context) {
-	    if (context.noArgs()) getSession(context).undo();
+	    if (context.noArgs()) {
+	    	if (!getSession(context).undo()) context.send(ChatColor.RED + "Cannot perform operation.");
+	    	return;
+		}
+		context.send(ChatColor.RED + "Too many args.");
     }
     
     private void redo(CmdContext context) {
-		if (context.noArgs()) getSession(context).redo();
+		if (context.noArgs()) {
+			if (!getSession(context).redo()) context.send(ChatColor.RED + "Cannot perform operation.");
+			return;
+		}
+		context.send(ChatColor.RED + "Too many args.");
     }
     
     private void clear(CmdContext context) {
-		if (context.noArgs()) getSession(context).clear();
+		if (context.noArgs()) {
+			if (getSession(context).clear()) context.send(ChatColor.RED + "History is already clear.");
+			return;
+		}
+		context.send(ChatColor.RED + "Too many args.");
 	}
 
 	private TextSession getSession(CmdContext context) {

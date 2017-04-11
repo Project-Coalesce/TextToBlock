@@ -59,10 +59,16 @@ public final class TextSession {
 
 		return true;
 	}
-
-	public void clear() {
+	
+	/**
+	 * Clears all the operations done by this user from the cache.
+	 * @return True if there was something to clear, false otherwise.
+	 */
+	public boolean clear() {
+		if (undo.isEmpty() && redo.isEmpty()) return false;
 		undo.clear();
 		redo.clear();
+		return true;
 	}
 
 
