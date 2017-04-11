@@ -5,9 +5,9 @@ import com.coalesce.command.base.CmdContext;
 import com.coalesce.command.base.Command;
 import com.coalesce.plugin.CoModule;
 import com.coalesce.plugin.CoPlugin;
+import com.coalesce.ttb.base.TextSession;
 import com.coalesce.ttb.blocks.SessionHolder;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public final class TTBCommands extends CoModule {
@@ -45,22 +45,19 @@ public final class TTBCommands extends CoModule {
 	}
     
     private void undo(CmdContext context) {
-	    if (context.noArgs()) {
-	    	session.getSession(((Player)context.getSender()).getUniqueId()).undo();
-	    	
-		}
+	    if (context.noArgs()) getSession(context).undo();
     }
     
     private void redo(CmdContext context) {
-		if (context.noArgs()) {
-			session.getSession(((Player)context.getSender()).getUniqueId()).redo();
-		}
+		if (context.noArgs()) getSession(context).redo();
     }
     
     private void clear(CmdContext context) {
-		if (context.noArgs()) {
-			session.getSession(((Player)context.getSender()).getUniqueId()).clear();
-		}
+		if (context.noArgs()) getSession(context).clear();
+	}
+
+	private TextSession getSession(CmdContext context) {
+		return session.getSession(context.asPlayer());
 	}
 
 }

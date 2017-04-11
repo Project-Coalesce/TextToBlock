@@ -3,6 +3,7 @@ package com.coalesce.ttb.blocks;
 import com.coalesce.plugin.CoModule;
 import com.coalesce.plugin.CoPlugin;
 import com.coalesce.ttb.base.TextSession;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -35,13 +36,13 @@ public final class SessionHolder extends CoModule {
 	/**
      * Gets a session from a user.
 	 *
-     * @param uuid User to get the session from.
+     * @param player User to get the session from.
      * @return The user's TextSession.
 	 *
 	 * @apiNote If a session doesn't exist, it will create one automatically.
      */
-    public @NotNull TextSession getSession(UUID uuid) {
-    	return sessions.computeIfAbsent(uuid, newUuid -> new TextSession());
+    public @NotNull TextSession getSession(Player player) {
+    	return sessions.computeIfAbsent(player.getUniqueId(), uuid -> new TextSession());
     }
     
     /**
@@ -51,8 +52,8 @@ public final class SessionHolder extends CoModule {
      *
 	 * @apiNote This should probably only be used on a player leave event.
      */
-    public void removeSession(@NotNull UUID user) {
-		sessions.remove(user);
+    public void removeSession(@NotNull Player player) {
+		sessions.remove(player.getUniqueId());
     }
 
 }
