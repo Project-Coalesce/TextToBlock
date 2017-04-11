@@ -1,6 +1,7 @@
 package com.coalesce.ttb;
 
 import com.coalesce.plugin.CoPlugin;
+import com.coalesce.ttb.blocks.SessionHolder;
 import com.coalesce.ttb.blocks.TTBConverter;
 import com.coalesce.ttb.data.Configuration;
 import com.coalesce.ttb.data.FontLoader;
@@ -19,12 +20,16 @@ public final class TextToBlock extends CoPlugin {
 
 	private FontLoader fontLoader;
 	private Configuration ttbConfiguration;
+	private SessionHolder sessionHolder;
 
 	@Override
 	public void onPluginEnable() throws Exception {
 
 		//Config stuff
 		ttbConfiguration = new Configuration();
+		
+		//SessionHolder instance
+		sessionHolder = new SessionHolder();
 
 		//Register Modules
 		addModules(fontLoader = new FontLoader(this));
@@ -39,8 +44,13 @@ public final class TextToBlock extends CoPlugin {
 	//TODO: Remove this. THis is only so we can play with the cool font stuff before the new command system is pushed
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-		if (label.equalsIgnoreCase("text")){
+	    if (command.getName().equalsIgnoreCase("textundo")) {
+	        if (!(sender instanceof Player)) {
+	            return false;
+            }
+            if (!getSessionHolder().getSession(((Player)sender).getUniqueId()).undo()) sender.sendMessage("Cannot perform undo operation.");
+        }
+		if (command.getName().equalsIgnoreCase("text")){
 
 			if (!(sender instanceof Player)){
 				return false;
@@ -59,13 +69,15 @@ public final class TextToBlock extends CoPlugin {
 
 			fontLoader.loadFont(fontName, font -> {
 
-				if (font == null){
-					player.sendMessage("No such font");
-					return;
-				}
+				if (font == null) {
+                    player.sendMessage("No such font");
+                    return;
+                }
 
 				World world = player.getWorld();
 				Set<Vector> blockLocs = TTBConverter.getTextBlocks(message, font, fontSize, player.getLocation().getBlock());
+				
+				getSessionHolder().getSession(player.getUniqueId()).addHistory(blockLocs);
 
 				Bukkit.getScheduler().runTask(this, () -> {
 
@@ -91,4 +103,8 @@ public final class TextToBlock extends CoPlugin {
 	public FontLoader getFontLoader() {
 		return fontLoader;
 	}
+    
+    public SessionHolder getSessionHolder() {
+        return sessionHolder;
+    }
 }

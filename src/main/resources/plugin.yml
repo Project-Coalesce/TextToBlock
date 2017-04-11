@@ -6,3 +6,5 @@ depend: [CoalesceCore]
 commands:
     text:
         description: Main TTB command
+    textundo:
+        description: Undos the previous command.
