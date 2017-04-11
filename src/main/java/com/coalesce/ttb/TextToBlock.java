@@ -1,5 +1,6 @@
 package com.coalesce.ttb;
 
+import com.coalesce.command.CommandModule;
 import com.coalesce.plugin.CoPlugin;
 import com.coalesce.ttb.blocks.SessionHolder;
 import com.coalesce.ttb.blocks.TTBConverter;
@@ -33,6 +34,9 @@ public final class TextToBlock extends CoPlugin {
 
 		//Register Modules
 		addModules(fontLoader = new FontLoader(this));
+		
+		//Register commands
+		new CommandModule(this);
 
 }
 
@@ -41,7 +45,7 @@ public final class TextToBlock extends CoPlugin {
 
 	}
 
-	//TODO: Remove this. THis is only so we can play with the cool font stuff before the new command system is pushed
+	/*//TODO: Remove this. THis is only so we can play with the cool font stuff before the new command system is pushed
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 	    if (command.getName().equalsIgnoreCase("textundo")) {
@@ -94,7 +98,7 @@ public final class TextToBlock extends CoPlugin {
 		}
 
 		return false;
-	}
+	}*/
 
 	public Configuration getTtbConfiguration() {
 		return ttbConfiguration;
