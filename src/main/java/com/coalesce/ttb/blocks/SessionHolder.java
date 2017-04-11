@@ -1,7 +1,6 @@
 package com.coalesce.ttb.blocks;
 
 import com.coalesce.ttb.TextToBlock;
-import jdk.nashorn.internal.ir.BlockStatement;
 import org.bukkit.Bukkit;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
@@ -12,7 +11,7 @@ import java.util.*;
 public class SessionHolder {
     
     //A map of all the current user sessions.
-    private final HashMap<UUID, TextSession> sessionMap = new HashMap<>();
+    private final Map<UUID, TextSession> sessionMap = new HashMap<>();
     
     //Plugin instance.
     private TextToBlock plugin;
