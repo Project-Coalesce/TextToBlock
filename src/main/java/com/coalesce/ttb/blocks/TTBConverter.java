@@ -29,7 +29,7 @@ public class TTBConverter {
 		imageGraphics.drawString(text, bufferedImage.getMinX(), height);
 		imageGraphics.dispose();
 
-		//Start from the top since the image is upsidedown
+		//Start from the top since the image is up-side-down
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 
