@@ -1,4 +1,4 @@
-package com.coalesce.ttb.data;
+package com.coalesce.ttb.config;
 
 public enum ConfigOptions {
 
