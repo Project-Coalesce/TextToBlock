@@ -26,7 +26,7 @@ public class TTBConverter {
 		Graphics2D imageGraphics = bufferedImage.createGraphics();
 		imageGraphics.setFont(font);
 		imageGraphics.setColor(Color.BLACK);
-		imageGraphics.drawString(text, 0, height);
+		imageGraphics.drawString(text, bufferedImage.getMinX(), height);
 		imageGraphics.dispose();
 
 		//Start from the top since the image is upsidedown

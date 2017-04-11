@@ -2,7 +2,7 @@ package com.coalesce.ttb.data;
 
 public enum ConfigOptions {
 
-	DEBUG("debug", true);
+	DEBUG("maxFontSize", 30);
 
 
 	private String path;
