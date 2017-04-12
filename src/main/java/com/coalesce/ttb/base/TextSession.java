@@ -1,6 +1,5 @@
 package com.coalesce.ttb.base;
 
-import com.coalesce.ttb.config.FontsConfig;
 import org.bukkit.block.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,8 +13,12 @@ import java.util.stream.Collectors;
  */
 public final class TextSession {
 	
-	private final Stack<Set<BlockState>> undo = new Stack<>(), redo = new Stack<>();
+	private final Operations undo, redo;
 
+	public TextSession(int maxSize) {
+		undo = new Operations(maxSize);
+		redo = new Operations(maxSize);
+	}
 
 	/**
 	 * Cache all BlockStates before modifying their blocks
@@ -37,7 +40,7 @@ public final class TextSession {
 	 * @return True if operation successful, false otherwise.
 	 */
 	public boolean undo() {
-		Set<BlockState> lastOperation = retrieve(undo);
+		Set<BlockState> lastOperation = undo.pull();
 		if (lastOperation == null) return false;
 
 		cacheRedo(pullCurrent(lastOperation));
@@ -52,7 +55,7 @@ public final class TextSession {
 	 * @return True if operation successful, false otherwise.
 	 */
 	public boolean redo() {
-		Set<BlockState> lastOperation = retrieve(redo);
+		Set<BlockState> lastOperation = redo.pull();
 		if (lastOperation == null) return false;
 
 		cacheUndo(pullCurrent(lastOperation));
@@ -71,29 +74,38 @@ public final class TextSession {
 		redo.clear();
 		return true;
 	}
-	
-	/**
-	 * Gets the redo stack.
-	 * @return The redo stack.
-	 */
-	public Stack<Set<BlockState>> getRedo() {
-		return redo;
-	}
-	
-	/**
-	 * Gets the undo stack.
-	 * @return The undo stack.
-	 */
-	public Stack<Set<BlockState>> getUndo() {
-		return undo;
-	}
-	
-	private @Nullable Set<BlockState> retrieve(Stack<Set<BlockState>> stack) {
-		return stack.isEmpty() ? null : stack.pop();
-	}
 
 	private @NotNull Set<BlockState> pullCurrent(@NotNull Set<BlockState> blockStates) {
 		return blockStates.stream().map(blockState -> blockState.getBlock().getState()).collect(Collectors.toSet());
+	}
+
+
+	private final class Operations {
+
+		private final int maxSize;
+		private final Stack<Set<BlockState>> stack = new Stack<>();
+
+		Operations(int maxSize) {
+			this.maxSize = maxSize;
+		}
+
+		private void push(Set<BlockState> operation) {
+			if (stack.size() == maxSize) stack.removeElementAt(0);
+			stack.add(operation);
+		}
+
+		private @Nullable Set<BlockState> pull() {
+			return isEmpty() ? null : stack.pop();
+		}
+
+		private boolean isEmpty() {
+			return stack.isEmpty();
+		}
+
+		private void clear() {
+			stack.clear();
+		}
+
 	}
 
 }
