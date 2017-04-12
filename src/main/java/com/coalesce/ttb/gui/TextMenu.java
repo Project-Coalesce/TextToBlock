@@ -4,6 +4,7 @@ import com.coalesce.gui.IconBuilder;
 import com.coalesce.gui.IconMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -15,6 +16,7 @@ public final class TextMenu extends IconMenu {
 
 	private String text;
 	private int width = 1;
+	private int fontSize = 12;
 	private Block origin;
 	private Font font;
 
@@ -26,7 +28,27 @@ public final class TextMenu extends IconMenu {
 		this.origin = player.getLocation().getBlock();
 
 		//Setup the Icons
-		fillbackground(new IconBuilder(Material.STAINED_GLASS_PANE).withDurability(15).withName(" ").build());
-		setIcon(new IconBuilder(Material.PAPER).withName(ChatColor.YELLOW + "Text").withLore(ChatColor.GRAY + text).build(), 0, 0);
+		fillbackground(new IconBuilder(Material.STAINED_GLASS_PANE).durability(15).name(" ").build());
+		setIcon(new IconBuilder(Material.PAPER).name(ChatColor.YELLOW + "Text").lore(ChatColor.WHITE + text).build(), 0, 0);
+		setIcon(new IconBuilder(Material.REDSTONE).name(ChatColor.YELLOW + "Font Size")
+				.lore(ChatColor.GRAY + "Current Size: " + ChatColor.WHITE + fontSize, "", ChatColor.GRAY + "Right-Click to increase",
+						ChatColor.GRAY + "Left-Click to decrease")
+				.onClick((clicker, clickType) -> {
+
+					if (clickType.isRightClick()){
+						fontSize += 2;
+
+					} else if (clickType.isLeftClick()) {
+						fontSize -= 2;
+
+					} else {
+						return;
+					}
+
+					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 1, 1);
+					//Reopen to update the menu
+					openForPlayer(clicker);
+
+				}).build(), 1, 0);
 	}
 }
