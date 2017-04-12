@@ -4,12 +4,11 @@ import com.coalesce.plugin.CoModule;
 import com.coalesce.plugin.CoPlugin;
 import com.coalesce.ttb.base.TextSession;
 import com.coalesce.ttb.config.FontsConfig;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Manages all user TextSessions
@@ -46,13 +45,19 @@ public final class SessionHolder extends CoModule {
 	 * @apiNote If a session doesn't exist, it will create one automatically.
      */
     public @NotNull TextSession getSession(Player player) {
-    	return sessions.computeIfAbsent(player.getUniqueId(), uuid -> new TextSession(config));
+		TextSession session = sessions.computeIfAbsent(player.getUniqueId(), uuid -> new TextSession());
+		Stack<Set<BlockState>> redo = session.getRedo(), undo = session.getUndo();
+		
+		if (redo.capacity() >= config.getMaxOperations()) redo.remove(redo.lastElement());
+		if (undo.capacity() >= config.getMaxOperations()) undo.remove(undo.lastElement());
+		
+    	return session;
     }
     
     /**
      * Removes a user from a session.
 	 *
-     * @param user The user to remove from the sessions.
+     * @param player The user to remove from the sessions.
      *
 	 * @apiNote This should probably only be used on a player leave event.
      */

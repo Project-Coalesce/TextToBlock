@@ -14,12 +14,6 @@ import java.util.stream.Collectors;
  */
 public final class TextSession {
 	
-	private FontsConfig config;
-	
-	public TextSession(FontsConfig config) {
-		this.config = config;
-	}
-	
 	private final Stack<Set<BlockState>> undo = new Stack<>(), redo = new Stack<>();
 
 
@@ -63,7 +57,7 @@ public final class TextSession {
 
 		cacheUndo(pullCurrent(lastOperation));
 		lastOperation.forEach(blockState -> blockState.update(true));
-
+		
 		return true;
 	}
 	
@@ -77,8 +71,23 @@ public final class TextSession {
 		redo.clear();
 		return true;
 	}
-
-
+	
+	/**
+	 * Gets the redo stack.
+	 * @return The redo stack.
+	 */
+	public Stack<Set<BlockState>> getRedo() {
+		return redo;
+	}
+	
+	/**
+	 * Gets the undo stack.
+	 * @return The undo stack.
+	 */
+	public Stack<Set<BlockState>> getUndo() {
+		return undo;
+	}
+	
 	private @Nullable Set<BlockState> retrieve(Stack<Set<BlockState>> stack) {
 		return stack.isEmpty() ? null : stack.pop();
 	}

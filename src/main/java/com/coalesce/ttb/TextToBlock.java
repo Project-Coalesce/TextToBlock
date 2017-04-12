@@ -9,10 +9,14 @@ import com.coalesce.ttb.commands.TTBCommands;
 import com.coalesce.ttb.config.FontsConfig;
 import com.coalesce.ttb.data.FontLoader;
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.PluginManager;
 
 import java.io.File;
 
-public final class TextToBlock extends CoPlugin {
+public final class TextToBlock extends CoPlugin implements Listener {
 
 	private FontsConfig fontsConfig;
 
@@ -34,11 +38,14 @@ public final class TextToBlock extends CoPlugin {
 
 		addModules(
 				fontLoader = new FontLoader(this),
-				sessionHolder = new SessionHolder(this),
+				sessionHolder = new SessionHolder(this, fontsConfig),
 				new TTBCommands(this, commands, sessionHolder));
 
 		//Might not be the best way to do this
-		Bukkit.getPluginManager().registerEvents(new IconMenuListener(), this);
+		PluginManager manager = Bukkit.getPluginManager();
+		manager.registerEvents(new IconMenuListener(), this);
+		manager.registerEvents(this, this);
+		
 	}
 
 	@Override
@@ -56,6 +63,11 @@ public final class TextToBlock extends CoPlugin {
 
 	public SessionHolder getSessionHolder() {
 		return sessionHolder;
+	}
+	
+	@EventHandler
+	public void onLeave(PlayerQuitEvent e) {
+		getSessionHolder().removeSession(e.getPlayer());
 	}
 
 }
