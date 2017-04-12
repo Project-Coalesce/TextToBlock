@@ -4,8 +4,9 @@ import org.bukkit.block.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Set;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 /**
@@ -83,19 +84,19 @@ public final class TextSession {
 	private final class Operations {
 
 		private final int maxSize;
-		private final Stack<Set<BlockState>> stack = new Stack<>();
+		private final Deque<Set<BlockState>> stack = new ArrayDeque<>();
 
 		Operations(int maxSize) {
 			this.maxSize = maxSize;
 		}
 
 		private void push(Set<BlockState> operation) {
-			if (stack.size() == maxSize) stack.removeElementAt(0);
-			stack.add(operation);
+			if (stack.size() == maxSize) stack.removeLast();
+			stack.addFirst(operation);
 		}
 
 		private @Nullable Set<BlockState> pull() {
-			return isEmpty() ? null : stack.pop();
+			return stack.pollFirst();
 		}
 
 		private boolean isEmpty() {
