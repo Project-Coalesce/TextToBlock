@@ -7,6 +7,7 @@ import com.coalesce.plugin.CoModule;
 import com.coalesce.plugin.CoPlugin;
 import com.coalesce.ttb.base.TextSession;
 import com.coalesce.ttb.blocks.SessionHolder;
+import com.coalesce.ttb.gui.TextMenu;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,9 +40,9 @@ public final class TTBCommands extends CoModule {
     private void text(CmdContext context) {
 		if (context.noArgs(ChatColor.RED + "Please input the text")) return;
 		String text = context.joinArgs();
-		
-		//Make sure you cache undo when creating text..
-		// TODO: 4/10/2017 Create gui with this text
+
+		//Open the GUI for the player
+		new TextMenu(context.asPlayer(), text).openForPlayer(context.asPlayer());
 	}
     
     private void undo(CmdContext context) {
