@@ -2,11 +2,13 @@ package com.coalesce.ttb;
 
 import com.coalesce.Core;
 import com.coalesce.command.CommandModule;
+import com.coalesce.gui.IconMenuListener;
 import com.coalesce.plugin.CoPlugin;
 import com.coalesce.ttb.blocks.SessionHolder;
 import com.coalesce.ttb.commands.TTBCommands;
 import com.coalesce.ttb.config.FontsConfig;
 import com.coalesce.ttb.data.FontLoader;
+import org.bukkit.Bukkit;
 
 import java.io.File;
 
@@ -34,6 +36,9 @@ public final class TextToBlock extends CoPlugin {
 				fontLoader = new FontLoader(this),
 				sessionHolder = new SessionHolder(this),
 				new TTBCommands(this, commands, sessionHolder));
+
+		//Might not be the best way to do this
+		Bukkit.getPluginManager().registerEvents(new IconMenuListener(), this);
 	}
 
 	@Override
