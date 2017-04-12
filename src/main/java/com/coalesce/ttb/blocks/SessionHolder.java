@@ -48,8 +48,8 @@ public final class SessionHolder extends CoModule {
 		TextSession session = sessions.computeIfAbsent(player.getUniqueId(), uuid -> new TextSession());
 		Stack<Set<BlockState>> redo = session.getRedo(), undo = session.getUndo();
 		
-		if (redo.capacity() >= config.getMaxOperations()) redo.remove(redo.lastElement());
-		if (undo.capacity() >= config.getMaxOperations()) undo.remove(undo.lastElement());
+		if (redo.size() >= config.getMaxOperations()) redo.remove(redo.lastElement());
+		if (undo.size() >= config.getMaxOperations()) undo.remove(undo.lastElement());
 		
     	return session;
     }
