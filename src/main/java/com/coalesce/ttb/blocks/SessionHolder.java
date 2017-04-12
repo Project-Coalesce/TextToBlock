@@ -3,6 +3,7 @@ package com.coalesce.ttb.blocks;
 import com.coalesce.plugin.CoModule;
 import com.coalesce.plugin.CoPlugin;
 import com.coalesce.ttb.base.TextSession;
+import com.coalesce.ttb.config.FontsConfig;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,10 +17,13 @@ import java.util.UUID;
 public final class SessionHolder extends CoModule {
     
     private final Map<UUID, TextSession> sessions = new HashMap<>();
+    
+    private final FontsConfig config;
 
 
-    public SessionHolder(@NotNull CoPlugin plugin) {
+    public SessionHolder(@NotNull CoPlugin plugin, FontsConfig config) {
         super(plugin, "TTB User Sessions");
+        this.config = config;
     }
 
 	@Override
@@ -42,7 +46,7 @@ public final class SessionHolder extends CoModule {
 	 * @apiNote If a session doesn't exist, it will create one automatically.
      */
     public @NotNull TextSession getSession(Player player) {
-    	return sessions.computeIfAbsent(player.getUniqueId(), uuid -> new TextSession());
+    	return sessions.computeIfAbsent(player.getUniqueId(), uuid -> new TextSession(config));
     }
     
     /**

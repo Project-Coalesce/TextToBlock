@@ -1,5 +1,6 @@
 package com.coalesce.ttb.base;
 
+import com.coalesce.ttb.config.FontsConfig;
 import org.bukkit.block.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,7 +13,13 @@ import java.util.stream.Collectors;
  * Cache of a player's current text operations
  */
 public final class TextSession {
-
+	
+	private FontsConfig config;
+	
+	public TextSession(FontsConfig config) {
+		this.config = config;
+	}
+	
 	private final Stack<Set<BlockState>> undo = new Stack<>(), redo = new Stack<>();
 
 
