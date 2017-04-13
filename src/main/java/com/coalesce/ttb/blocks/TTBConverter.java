@@ -5,15 +5,21 @@ import org.bukkit.util.Vector;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
+import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
 
 public class TTBConverter {
 
-	public static Set<Vector> getTextBlocks(String text, Font font, float fontSize, Block origin) {
-
+	public static Set<Vector> getTextBlocks(String text, Font font, Block origin, float fontSize, boolean bold, boolean italic, boolean underLine) {
+		
 		font = font.deriveFont(fontSize);
+		
+		if (bold) font = font.deriveFont(Font.BOLD);
+		if (italic) font = font.deriveFont(Font.ITALIC);
+		if (underLine) font = font.deriveFont(TextAttribute.UNDERLINE_ON);
+		
 		Vector originVector = origin.getLocation().toVector();
 		Set<Vector> textLocations = new HashSet<>();
 
