@@ -39,7 +39,7 @@ public final class TextToBlock extends CoPlugin implements Listener {
 		addModules(
 				fontLoader = new FontLoader(this),
 				sessionHolder = new SessionHolder(this, fontsConfig),
-				new TTBCommands(this, commands, sessionHolder));
+				new TTBCommands(this, commands));
 
 		//Might not be the best way to do this
 		PluginManager manager = Bukkit.getPluginManager();

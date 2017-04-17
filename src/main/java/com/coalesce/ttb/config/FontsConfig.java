@@ -13,6 +13,8 @@ public class FontsConfig extends Config {
 	private int maxFontSize = 100;
 	private boolean fontPermissions = false;
 	private Operations operations = new Operations();
+	private String fallbackFont = "blocked";
+	private float fallbackFontSize = 12;
 
 
 	public int getMaxFontSize() {
@@ -38,8 +40,23 @@ public class FontsConfig extends Config {
 	public void setFontPermissions(boolean perFontPermissions) {
 		this.fontPermissions = perFontPermissions;
 	}
-
-
+	
+	public String getFallbackFont() {
+		return fallbackFont;
+	}
+	
+	public void setFallbackFont(String fallbackFont) {
+		this.fallbackFont = fallbackFont;
+	}
+	
+	public float getFallbackFontSize() {
+		return fallbackFontSize;
+	}
+	
+	public void setFallbackFontSize(float fallbackFontSize) {
+		this.fallbackFontSize = fallbackFontSize;
+	}
+	
 	private class Operations {
 
 		private int maxOperations = 5;
