@@ -26,18 +26,12 @@ public final class TTBCommands extends CoModule {
 	private FontLoader fontLoader;
 	private FontsConfig config;
 
-	public TTBCommands(@NotNull TextToBlock plugin, CommandModule commands) {
+	public TTBCommands(@NotNull TextToBlock plugin) {
 		super(plugin, "TTB Commands");
 		
 		this.fontLoader = plugin.getFontLoader();
 		this.session = plugin.getSessionHolder();
 		this.config = plugin.getFontsConfig();
-		
-		commands.add(
-				Command.of(this::text, "Text").onlyPlayer().require("ttb.create"),
-				Command.of(this::undo, "Undotext").onlyPlayer().require("ttb.undo"),
-				Command.of(this::redo, "Redotext").onlyPlayer().require("ttb.redo"),
-				Command.of(this::clear, "Cleartext").onlyPlayer().require("ttb.clear"));
 	}
 
 	@Override
