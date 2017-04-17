@@ -1,12 +1,11 @@
 package com.coalesce.ttb.config;
 
-import com.coalesce.config.Config;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
 
-public class FontsConfig extends Config {
+public class FontsConfig {
 
 	private static final FontsConfig DEFAULT = new FontsConfig();
 	
@@ -70,11 +69,6 @@ public class FontsConfig extends Config {
 			this.maxOperations = maxOperations;
 		}
 
-	}
-
-
-	public static FontsConfig load(@NotNull File file) {
-		return load(DEFAULT, file);
 	}
 
 }
