@@ -1,24 +1,11 @@
 package com.coalesce.ttb.commands;
 
-import com.coalesce.command.CommandModule;
-import com.coalesce.command.base.CmdContext;
-import com.coalesce.command.base.Command;
 import com.coalesce.plugin.CoModule;
 import com.coalesce.ttb.TextToBlock;
-import com.coalesce.ttb.base.TextSession;
-import com.coalesce.ttb.blocks.SessionHolder;
-import com.coalesce.ttb.blocks.TTBConverter;
+import com.coalesce.ttb.blocks.FontLoader;
 import com.coalesce.ttb.config.FontsConfig;
-import com.coalesce.ttb.data.FontLoader;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.util.Vector;
+import com.coalesce.ttb.session.SessionHolder;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-import java.util.Set;
 
 public final class TTBCommands extends CoModule {
 
@@ -27,7 +14,7 @@ public final class TTBCommands extends CoModule {
 	private FontsConfig config;
 
 	public TTBCommands(@NotNull TextToBlock plugin) {
-		super(plugin, "TTB Commands");
+		super(plugin, "TextToBlock Commands");
 		
 		this.fontLoader = plugin.getFontLoader();
 		this.session = plugin.getSessionHolder();
@@ -43,7 +30,7 @@ public final class TTBCommands extends CoModule {
 
 	}
 
-	//The command would ideally look like this: /text <{message}> [-f, -s, -i, -b, -u]
+	/*//The command would ideally look like this: /text <{message}> [-f, -s, -i, -b, -u]
     private void text(CmdContext context) {
 		if (context.noArgs(ChatColor.RED + "Please input the text")) return;
 		//String text = context.joinArgs();
@@ -122,6 +109,6 @@ public final class TTBCommands extends CoModule {
 				blockLocs.forEach(vector -> location.getWorld().getBlockAt(vector.getBlockX(), vector.getBlockY(), vector.getBlockZ()).setType(Material.QUARTZ_BLOCK));
 			});
 		});
-	}
+	}*/
 
 }

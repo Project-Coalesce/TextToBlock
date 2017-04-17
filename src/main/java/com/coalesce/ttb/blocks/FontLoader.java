@@ -1,4 +1,4 @@
-package com.coalesce.ttb.data;
+package com.coalesce.ttb.blocks;
 
 import com.coalesce.plugin.CoModule;
 import com.coalesce.plugin.CoPlugin;
@@ -59,7 +59,7 @@ public class FontLoader extends CoModule {
 		try {
 			return Font.createFont(Font.TRUETYPE_FONT, fontFile);
 		} catch (FontFormatException | IOException e) {
-			error("Failed to load font " + fontName);
+			//error("Failed to load font " + fontName);
 			e.printStackTrace();
 		}
 

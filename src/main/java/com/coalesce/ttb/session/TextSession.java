@@ -1,4 +1,4 @@
-package com.coalesce.ttb.base;
+package com.coalesce.ttb.session;
 
 import org.bukkit.block.BlockState;
 import org.jetbrains.annotations.NotNull;
