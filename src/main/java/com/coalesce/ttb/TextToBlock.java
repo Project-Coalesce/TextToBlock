@@ -36,6 +36,7 @@ public final class TextToBlock extends CoPlugin implements Listener {
 		addModules(
 				fontLoader = new FontLoader(this),
 				sessionHolder = new SessionHolder(this, fontsConfig),
+				fontsConfig = new FontsConfig(this),
 				new TTBCommands(this));
 
 		//Might not be the best way to do this
