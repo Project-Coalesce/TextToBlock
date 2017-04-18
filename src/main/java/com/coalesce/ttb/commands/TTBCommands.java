@@ -1,5 +1,8 @@
 package com.coalesce.ttb.commands;
 
+import com.coalesce.command.CoCommand;
+import com.coalesce.command.CommandBuilder;
+import com.coalesce.command.CommandContext;
 import com.coalesce.plugin.CoModule;
 import com.coalesce.ttb.TextToBlock;
 import com.coalesce.ttb.blocks.FontLoader;
@@ -19,6 +22,17 @@ public final class TTBCommands extends CoModule {
 		this.fontLoader = plugin.getFontLoader();
 		this.session = plugin.getSessionHolder();
 		this.config = plugin.getFontsConfig();
+		
+		CoCommand command = new CommandBuilder("text")
+				.executor(this::text)
+				.minArgs(1)
+				.permission("ttb.generate")
+				.usage("/text <message>")
+				.description("Generates text from a TTF file.")
+				.playerOnly()
+				.build();
+				
+		
 	}
 
 	@Override
@@ -28,6 +42,9 @@ public final class TTBCommands extends CoModule {
 	@Override
 	protected void onDisable() throws Exception {
 
+	}
+	
+	public void text(CommandContext context) {
 	}
 
 	/*//The command would ideally look like this: /text <{message}> [-f, -s, -i, -b, -u]
