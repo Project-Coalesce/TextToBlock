@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class VertexBuilder {
+public class VectorBuilder {
 	
 	private final TextToBlock plugin;
 	private final Location location;
@@ -29,7 +29,7 @@ public class VertexBuilder {
 	private boolean bold = false;
 	
 	
-	public VertexBuilder(String text, Location location, TextToBlock plugin) {
+	public VectorBuilder(String text, Location location, TextToBlock plugin) {
 		this.text = text;
 		this.location = location;
 		this.plugin = plugin;
@@ -61,7 +61,7 @@ public class VertexBuilder {
 	 *
 	 * @param name The name of the font wanting to be loaded.
 	 */
-	public VertexBuilder font(String name) {
+	public VectorBuilder font(String name) {
 		plugin.getFontLoader().loadFont(name, font -> {
 			if (font == null) {
 				try {
@@ -80,7 +80,7 @@ public class VertexBuilder {
 	 *
 	 * @param size The font size.
 	 */
-	public VertexBuilder size(float size) {
+	public VectorBuilder size(float size) {
 		this.size = size;
 		return this;
 	}
@@ -88,7 +88,7 @@ public class VertexBuilder {
 	/**
 	 * Sets the font to bold.
 	 */
-	public VertexBuilder bold() {
+	public VectorBuilder bold() {
 		this.bold = true;
 		return this;
 	}
@@ -98,7 +98,7 @@ public class VertexBuilder {
 	 *
 	 * @param material The material for this text.
 	 */
-	public VertexBuilder material(Material material) {
+	public VectorBuilder material(Material material) {
 		if (material.isBlock()) {
 			this.material = material;
 		}
@@ -108,7 +108,7 @@ public class VertexBuilder {
 	/**
 	 * Sets the font in italics.
 	 */
-	public VertexBuilder italic() {
+	public VectorBuilder italic() {
 		this.italics = true;
 		return this;
 	}
@@ -116,7 +116,7 @@ public class VertexBuilder {
 	/**
 	 * Sets the font underlined.
 	 */
-	public VertexBuilder underline() {
+	public VectorBuilder underline() {
 		this.underline = true;
 		return this;
 	}
@@ -126,7 +126,7 @@ public class VertexBuilder {
 	 *
 	 * @param orientation The orientation of this text.
 	 */
-	public VertexBuilder orientation(Orientation orientation) {
+	public VectorBuilder orientation(Orientation orientation) {
 		this.orientation = orientation;
 		return this;
 	}
