@@ -37,9 +37,9 @@ public class VectorBuilder {
 		/*
 		 * Section handles font size fallback, material fallback, and font file fallback.
 		 */
-		String name = (String)plugin.getConfig("config").getEntry("font.fallbackFont").getValue();
-		Material material = Material.valueOf((String)plugin.getConfig("config").getEntry("font.fallbackMaterial").getValue());
-		float size = (float)plugin.getConfig("config").getEntry("font.fallbackFontSize").getValue();
+		String name = plugin.getFontsConfig().getFallbackFont();
+		Material material = plugin.getFontsConfig().getFallbackMaterial();
+		float size = plugin.getFontsConfig().getFallbackFontSize();
 		
 		plugin.getFontLoader().loadFont(name, font -> {
 			if (font == null) {

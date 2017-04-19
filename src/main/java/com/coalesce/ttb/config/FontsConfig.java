@@ -66,5 +66,13 @@ public final class FontsConfig extends CoModule {
 	public void setFallbackFontSize(float fallbackFontSize) {
 		config.getEntry("font.fallbackFontSize").setValue(fallbackFontSize);
 	}
+	
+	public Material getFallbackMaterial() {
+		return (Material) config.getEntry("font.fallbackMaterial").getValue();
+	}
+	
+	public void setFallbackMaterial(Material material) {
+		config.getEntry("font.fallbackMaterial").setValue(material.name());
+	}
 
 }
