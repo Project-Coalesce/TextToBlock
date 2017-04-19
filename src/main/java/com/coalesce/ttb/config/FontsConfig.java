@@ -4,6 +4,7 @@ import com.coalesce.config.yml.Entry;
 import com.coalesce.config.yml.YmlConfig;
 import com.coalesce.plugin.CoModule;
 import com.coalesce.ttb.TextToBlock;
+import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -25,6 +26,7 @@ public final class FontsConfig extends CoModule {
 		config.addEntry(new Entry(config, "font.maxFontSize", 100));
 		config.addEntry(new Entry(config, "font.fallbackFontSize", 12));
 		config.addEntry(new Entry(config, "font.fallbackFont", "blocked"));
+		config.addEntry(new Entry(config, "font.fallbackMaterial", Material.QUARTZ_BLOCK.name()));
 		config.addEntry(new Entry(config, "operations.historySize", 10));
 	}
 	
