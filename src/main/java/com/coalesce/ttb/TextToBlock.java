@@ -18,8 +18,11 @@ public final class TextToBlock extends CoPlugin implements Listener {
 
 	private FontLoader fontLoader;
 	private SessionHolder sessionHolder;
-
-
+	
+	public TextToBlock() {
+		super("TextToBlock");
+	}
+	
 	//@Override
 	public boolean onPreEnable() {
 		//fontsConfig = FontsConfig.load(new File(getDataFolder(), "FontsConfig.toml"));
