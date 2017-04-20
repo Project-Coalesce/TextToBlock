@@ -23,7 +23,7 @@ public final class TTBCommands extends CoModule {
 		this.session = plugin.getSessionHolder();
 		this.config = plugin.getFontsConfig();
 		
-		CoCommand command = new CommandBuilder("text")
+		CoCommand command = new CommandBuilder(plugin, "text")
 				.executor(this::text)
 				.minArgs(1)
 				.permission("ttb.generate")
@@ -31,8 +31,7 @@ public final class TTBCommands extends CoModule {
 				.description("Generates text from a TTF file.")
 				.playerOnly()
 				.build();
-				
-		
+		plugin.addCommand(command);
 	}
 
 	@Override
