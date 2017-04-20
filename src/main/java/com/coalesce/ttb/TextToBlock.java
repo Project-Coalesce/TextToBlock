@@ -22,13 +22,6 @@ public final class TextToBlock extends CoPlugin implements Listener {
 	public TextToBlock() {
 		this.displayName = "TextToBlock";
 	}
-	
-	//@Override
-	public boolean onPreEnable() {
-		//fontsConfig = FontsConfig.load(new File(getDataFolder(), "FontsConfig.toml"));
-		//return super.onPreEnable();
-		return true;
-	}
 
 	@Override
 	public void onPluginEnable() throws Exception {
@@ -38,7 +31,7 @@ public final class TextToBlock extends CoPlugin implements Listener {
 
 		addModules(
 				fontLoader = new FontLoader(this),
-				sessionHolder = new SessionHolder(this, fontsConfig),
+				sessionHolder = new SessionHolder(this),
 				fontsConfig = new FontsConfig(this),
 				new TTBCommands(this));
 

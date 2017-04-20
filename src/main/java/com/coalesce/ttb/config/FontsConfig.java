@@ -13,21 +13,22 @@ import java.io.File;
 public final class FontsConfig extends CoModule {
 	
 	private final TextToBlock plugin;
-	private YmlConfig config;
+	private final YmlConfig config;
 	
 	public FontsConfig(TextToBlock plugin) {
 		super(plugin, "TextToBlock Configuration");
 		this.plugin = plugin;
-	}
-	
-	@Override
-	protected void onEnable() throws Exception {
 		this.config = (YmlConfig) plugin.getConfig("config");
 		config.addEntry(new Entry(config, "font.maxFontSize", 100));
 		config.addEntry(new Entry(config, "font.fallbackFontSize", 12));
 		config.addEntry(new Entry(config, "font.fallbackFont", "blocked"));
 		config.addEntry(new Entry(config, "font.fallbackMaterial", Material.QUARTZ_BLOCK.name()));
 		config.addEntry(new Entry(config, "operations.historySize", 10));
+	}
+	
+	@Override
+	protected void onEnable() throws Exception {
+		
 	}
 	
 	@Override

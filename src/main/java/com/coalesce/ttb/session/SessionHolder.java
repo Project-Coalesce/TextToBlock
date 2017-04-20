@@ -2,6 +2,7 @@ package com.coalesce.ttb.session;
 
 import com.coalesce.plugin.CoModule;
 import com.coalesce.plugin.CoPlugin;
+import com.coalesce.ttb.TextToBlock;
 import com.coalesce.ttb.session.TextSession;
 import com.coalesce.ttb.config.FontsConfig;
 import org.bukkit.entity.Player;
@@ -21,9 +22,9 @@ public final class SessionHolder extends CoModule {
     private final FontsConfig config;
 
 
-    public SessionHolder(@NotNull CoPlugin plugin, FontsConfig config) {
+    public SessionHolder(@NotNull TextToBlock plugin) {
         super(plugin, "TTB User Sessions");
-        this.config = config;
+        this.config = plugin.getFontsConfig();
     }
 
 	@Override
@@ -46,7 +47,14 @@ public final class SessionHolder extends CoModule {
 	 * @apiNote If a session doesn't exist, it will create one automatically.
      */
     public @NotNull TextSession getSession(Player player) {
-		return sessions.computeIfAbsent(player.getUniqueId(), uuid -> new TextSession(config.getMaxOperations()));
+		System.out.println(player.getUniqueId().toString());
+		System.out.println(config.getMaxOperations());
+		if (!sessions.containsKey(player.getUniqueId())) {
+    		TextSession session = new TextSession(config.getMaxOperations());
+    		sessions.put(player.getUniqueId(), session);
+    		return session;
+		}
+		return sessions.get(player.getUniqueId());
     }
     
     /**
