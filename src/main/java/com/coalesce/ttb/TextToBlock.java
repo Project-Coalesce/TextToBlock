@@ -20,7 +20,7 @@ public final class TextToBlock extends CoPlugin implements Listener {
 	private SessionHolder sessionHolder;
 	
 	public TextToBlock() {
-		super("TextToBlock");
+		this.displayName = "TextToBlock";
 	}
 	
 	//@Override
