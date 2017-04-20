@@ -1,20 +1,16 @@
 package com.coalesce.ttb;
 
-import com.coalesce.Core;
-import com.coalesce.command.CommandModule;
 import com.coalesce.gui.IconMenuListener;
 import com.coalesce.plugin.CoPlugin;
-import com.coalesce.ttb.blocks.SessionHolder;
+import com.coalesce.ttb.blocks.FontLoader;
 import com.coalesce.ttb.commands.TTBCommands;
 import com.coalesce.ttb.config.FontsConfig;
-import com.coalesce.ttb.data.FontLoader;
+import com.coalesce.ttb.session.SessionHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.PluginManager;
-
-import java.io.File;
 
 public final class TextToBlock extends CoPlugin implements Listener {
 
@@ -22,24 +18,29 @@ public final class TextToBlock extends CoPlugin implements Listener {
 
 	private FontLoader fontLoader;
 	private SessionHolder sessionHolder;
-
-
-	@Override
+	
+	public TextToBlock() {
+		this.displayName = "TextToBlock";
+	}
+	
+	//@Override
 	public boolean onPreEnable() {
-		fontsConfig = FontsConfig.load(new File(getDataFolder(), "FontsConfig.toml"));
-		return super.onPreEnable();
+		//fontsConfig = FontsConfig.load(new File(getDataFolder(), "FontsConfig.toml"));
+		//return super.onPreEnable();
+		return true;
 	}
 
 	@Override
 	public void onPluginEnable() throws Exception {
 
 		// temporary
-		CommandModule commands = getServer().getServicesManager().load(Core.class).getCommandModule();
+		//CommandModule commands = getServer().getServicesManager().load(Core.class).getCommandModule();
 
 		addModules(
 				fontLoader = new FontLoader(this),
 				sessionHolder = new SessionHolder(this, fontsConfig),
-				new TTBCommands(this, commands, sessionHolder));
+				fontsConfig = new FontsConfig(this),
+				new TTBCommands(this));
 
 		//Might not be the best way to do this
 		PluginManager manager = Bukkit.getPluginManager();

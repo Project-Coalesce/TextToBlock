@@ -1,8 +1,8 @@
-package com.coalesce.ttb.blocks;
+package com.coalesce.ttb.session;
 
 import com.coalesce.plugin.CoModule;
 import com.coalesce.plugin.CoPlugin;
-import com.coalesce.ttb.base.TextSession;
+import com.coalesce.ttb.session.TextSession;
 import com.coalesce.ttb.config.FontsConfig;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

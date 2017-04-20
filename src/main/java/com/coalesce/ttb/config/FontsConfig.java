@@ -1,63 +1,78 @@
 package com.coalesce.ttb.config;
 
-import com.coalesce.config.Config;
+import com.coalesce.config.yml.Entry;
+import com.coalesce.config.yml.YmlConfig;
+import com.coalesce.plugin.CoModule;
+import com.coalesce.ttb.TextToBlock;
+import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
 
-public class FontsConfig extends Config {
-
-	private static final FontsConfig DEFAULT = new FontsConfig();
+public final class FontsConfig extends CoModule {
 	
-	private int maxFontSize = 100;
-	private boolean fontPermissions = false;
-	private Operations operations = new Operations();
-
+	private final TextToBlock plugin;
+	private YmlConfig config;
+	
+	public FontsConfig(TextToBlock plugin) {
+		super(plugin, "TextToBlock Configuration");
+		this.plugin = plugin;
+	}
+	
+	@Override
+	protected void onEnable() throws Exception {
+		this.config = (YmlConfig) plugin.getConfig("config");
+		config.addEntry(new Entry(config, "font.maxFontSize", 100));
+		config.addEntry(new Entry(config, "font.fallbackFontSize", 12));
+		config.addEntry(new Entry(config, "font.fallbackFont", "blocked"));
+		config.addEntry(new Entry(config, "font.fallbackMaterial", Material.QUARTZ_BLOCK.name()));
+		config.addEntry(new Entry(config, "operations.historySize", 10));
+	}
+	
+	@Override
+	protected void onDisable() throws Exception {
+		
+	}
 
 	public int getMaxFontSize() {
-		return maxFontSize;
+		return (int) config.getEntry("font.maxFontSize").getValue();
 	}
 
 	public void setMaxFontSize(int maxFontSize) {
-		this.maxFontSize = maxFontSize;
+		config.getEntry("font.maxFontSize").setValue(maxFontSize);
 	}
 
 	public int getMaxOperations() {
-		return operations.getMaxOperations();
+		return (int) config.getEntry("operations.historySize").getValue();
 	}
 
 	public void setMaxOperations(int maxOperations) {
-		this.operations.setMaxOperations(maxOperations);
+		config.getEntry("operations.historySize").setValue(maxOperations);
 	}
 	
-	public boolean perFontPermissions() {
-		return  fontPermissions;
+	public String getFallbackFont() {
+		return (String) config.getEntry("font.fallbackFont").getValue();
 	}
 	
-	public void setFontPermissions(boolean perFontPermissions) {
-		this.fontPermissions = perFontPermissions;
+	public void setFallbackFont(String fallbackFont) {
+		config.getEntry("font.fallbackFont").setValue(fallbackFont);
 	}
-
-
-	private class Operations {
-
-		private int maxOperations = 5;
-
-
-		int getMaxOperations() {
-			return maxOperations;
-		}
-
-		void setMaxOperations(int maxOperations) {
-			this.maxOperations = maxOperations;
-		}
-
+	
+	public float getFallbackFontSize() {
+		return (float) config.getEntry("font.fallbackFontSize").getValue();
 	}
-
-
-	public static FontsConfig load(@NotNull File file) {
-		return load(DEFAULT, file);
+	
+	public void setFallbackFontSize(float fallbackFontSize) {
+		config.getEntry("font.fallbackFontSize").setValue(fallbackFontSize);
+	}
+	
+	public Material getFallbackMaterial() {
+		return (Material) config.getEntry("font.fallbackMaterial").getValue();
+	}
+	
+	public void setFallbackMaterial(Material material) {
+		config.getEntry("font.fallbackMaterial").setValue(material.name());
 	}
 
 }
