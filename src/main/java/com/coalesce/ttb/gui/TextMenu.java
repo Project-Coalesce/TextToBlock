@@ -1,58 +1,49 @@
 package com.coalesce.ttb.gui;
 
-import com.coalesce.gui.Icon;
-import com.coalesce.gui.IconBuilder;
-import com.coalesce.gui.IconMenu;
-import org.bukkit.ChatColor;
+import com.coalesce.gui.ItemBuilder;
+import com.coalesce.gui.PlayerGui;
+import com.coalesce.ttb.TextToBlock;
+import com.coalesce.ttb.blocks.TextLoader;
 import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
+import static org.bukkit.ChatColor.GRAY;
+import static org.bukkit.ChatColor.WHITE;
+import static org.bukkit.ChatColor.YELLOW;
 
-public final class TextMenu extends IconMenu {
+public final class TextMenu extends PlayerGui {
 
-	private Player player;
+	private TextLoader textLoader;
 
-	private String text;
-	private int width = 1;
-	private int fontSize = 12;
-	private Block origin;
-	private Font font;
+	public TextMenu(TextToBlock plugin, String fontName, String text, Player player) {
+		super(plugin, 9, GRAY + "Text Menu");
 
-	public TextMenu(Player player, String text) {
-		super("Text Editor", 1);
+		textLoader = new TextLoader(plugin, text, fontName, player.getLocation());
 
-		this.player = player;
-		this.text = text;
-		this.origin = player.getLocation().getBlock();
+		//Text
+		addItem(viewer ->
+				new ItemBuilder(Material.BOOK)
+						.name(YELLOW + "Text")
+						.lore(text)
+						.build()
+				, null);
 
-		//Setup the Icons
-		fillbackground(new IconBuilder(Material.STAINED_GLASS_PANE).durability(15).name(" ").build());
-		setIcon(new IconBuilder(Material.PAPER).name(ChatColor.YELLOW + "Text").lore(ChatColor.WHITE + text).build(), 0, 0);
-		setIcon(new IconBuilder(Material.REDSTONE).name(ChatColor.YELLOW + "Font Size")
-				.lore(
-						ChatColor.GRAY + "Current Size: " + ChatColor.WHITE + fontSize, "",
-						ChatColor.GRAY + "Right-Click to increase",
-						ChatColor.GRAY + "Left-Click to decrease")
-				.onClick((clicker, clickType) -> {
-					if (clickType.isRightClick()){
-						fontSize += 2;
-						
-					} else if (clickType.isLeftClick()) {
-						fontSize -= 2;
-						
-					}
-					else {
-						return;
-					}
-					
-					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 1, 1);
-					//Reopen to update the menu
-					openForPlayer(clicker);
-					
-				}).build(), 1, 0);
-		setIcon(new IconBuilder(Material.SIGN).name("Generate").build(), 7, 0);
+		//Font
+		addItem(viewer ->
+				new ItemBuilder(Material.PAPER)
+						.name(YELLOW + "Font")
+						.lore(WHITE + "Current Font: " + GRAY + textLoader.getFontName())
+						.build()
+				, null);
+
+		//Font size
+		addItem(viewer ->
+				new ItemBuilder(Material.IRON_INGOT)
+						.name(YELLOW + "Font Size")
+						.lore(WHITE + "Current Font Size: " + GRAY + textLoader.getFontSize())
+						.build(),
+				clicker -> {
+					textLoader.setFontSize(textLoader.getFontSize() + 2);
+				});
 	}
 }
