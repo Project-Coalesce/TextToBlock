@@ -66,7 +66,12 @@ public final class TTBCommands extends CoModule {
 	}
 	
 	public void text(CommandContext context) {
-		context.send("hi");
+		StringBuilder builder = new StringBuilder();
+		for (String s : context.getArgs()) {
+			builder.append(s);
+			builder.append(" ");
+		}
+		String text = builder.toString();
 	}
 	
 	public void undo(CommandContext context) {
