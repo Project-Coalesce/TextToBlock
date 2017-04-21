@@ -47,8 +47,6 @@ public final class SessionHolder extends CoModule {
 	 * @apiNote If a session doesn't exist, it will create one automatically.
      */
     public @NotNull TextSession getSession(Player player) {
-		System.out.println(player.getUniqueId().toString());
-		System.out.println(config.getMaxOperations());
 		if (!sessions.containsKey(player.getUniqueId())) {
     		TextSession session = new TextSession(config.getMaxOperations());
     		sessions.put(player.getUniqueId(), session);

@@ -25,14 +25,12 @@ public final class TextToBlock extends CoPlugin implements Listener {
 
 	@Override
 	public void onPluginEnable() throws Exception {
-
-		// temporary
-		//CommandModule commands = getServer().getServicesManager().load(Core.class).getCommandModule();
+		
+		fontsConfig = new FontsConfig(this);
 
 		addModules(
 				fontLoader = new FontLoader(this),
 				sessionHolder = new SessionHolder(this),
-				fontsConfig = new FontsConfig(this),
 				new TTBCommands(this));
 
 		//Might not be the best way to do this

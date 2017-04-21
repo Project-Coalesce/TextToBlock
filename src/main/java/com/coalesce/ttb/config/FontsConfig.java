@@ -2,23 +2,19 @@ package com.coalesce.ttb.config;
 
 import com.coalesce.config.yml.Entry;
 import com.coalesce.config.yml.YmlConfig;
-import com.coalesce.plugin.CoModule;
 import com.coalesce.ttb.TextToBlock;
 import org.bukkit.Material;
-import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
 
 
-public final class FontsConfig extends CoModule {
+public final class FontsConfig extends YmlConfig {
 	
 	private final TextToBlock plugin;
 	private final YmlConfig config;
 	
 	public FontsConfig(TextToBlock plugin) {
-		super(plugin, "TextToBlock Configuration");
+		super("config", plugin);
 		this.plugin = plugin;
-		this.config = (YmlConfig) plugin.getConfig("config");
+		this.config = (FontsConfig) plugin.getConfig("config");
 		config.addEntry(new Entry(config, "font.maxFontSize", 100));
 		config.addEntry(new Entry(config, "font.fallbackFontSize", 12));
 		config.addEntry(new Entry(config, "font.fallbackFont", "blocked"));
@@ -26,30 +22,20 @@ public final class FontsConfig extends CoModule {
 		config.addEntry(new Entry(config, "operations.historySize", 10));
 	}
 	
-	@Override
-	protected void onEnable() throws Exception {
-		
-	}
-	
-	@Override
-	protected void onDisable() throws Exception {
-		
-	}
-
 	public int getMaxFontSize() {
-		return (int) config.getEntry("font.maxFontSize").getValue();
+		return (int) getEntry("font.maxFontSize").getValue();
 	}
 
 	public void setMaxFontSize(int maxFontSize) {
-		config.getEntry("font.maxFontSize").setValue(maxFontSize);
+		getEntry("font.maxFontSize").setValue(maxFontSize);
 	}
 
 	public int getMaxOperations() {
-		return (int) config.getEntry("operations.historySize").getValue();
+		return (int) getEntry("operations.historySize").getValue();
 	}
 
 	public void setMaxOperations(int maxOperations) {
-		config.getEntry("operations.historySize").setValue(maxOperations);
+		getEntry("operations.historySize").setValue(maxOperations);
 	}
 	
 	public String getFallbackFont() {
@@ -57,11 +43,11 @@ public final class FontsConfig extends CoModule {
 	}
 	
 	public void setFallbackFont(String fallbackFont) {
-		config.getEntry("font.fallbackFont").setValue(fallbackFont);
+		getEntry("font.fallbackFont").setValue(fallbackFont);
 	}
 	
 	public float getFallbackFontSize() {
-		return (float) config.getEntry("font.fallbackFontSize").getValue();
+		return (float) getEntry("font.fallbackFontSize").getValue();
 	}
 	
 	public void setFallbackFontSize(float fallbackFontSize) {
@@ -69,11 +55,11 @@ public final class FontsConfig extends CoModule {
 	}
 	
 	public Material getFallbackMaterial() {
-		return (Material) config.getEntry("font.fallbackMaterial").getValue();
+		return (Material) getEntry("font.fallbackMaterial").getValue();
 	}
 	
 	public void setFallbackMaterial(Material material) {
-		config.getEntry("font.fallbackMaterial").setValue(material.name());
+		getEntry("font.fallbackMaterial").setValue(material.name());
 	}
 
 }
