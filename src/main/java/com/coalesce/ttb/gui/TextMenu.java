@@ -23,7 +23,7 @@ public final class TextMenu extends PlayerGui {
 		//Text
 		addItem(viewer ->
 				new ItemBuilder(Material.BOOK)
-						.name(YELLOW + "Text")
+						.displayName(YELLOW + "Text")
 						.lore(text)
 						.build()
 				, null);
@@ -31,7 +31,7 @@ public final class TextMenu extends PlayerGui {
 		//Font
 		addItem(viewer ->
 				new ItemBuilder(Material.PAPER)
-						.name(YELLOW + "Font")
+						.displayName(YELLOW + "Font")
 						.lore(WHITE + "Current Font: " + GRAY + textLoader.getFontName())
 						.build()
 				, null);
@@ -39,10 +39,10 @@ public final class TextMenu extends PlayerGui {
 		//Font size
 		addItem(viewer ->
 				new ItemBuilder(Material.IRON_INGOT)
-						.name(YELLOW + "Font Size")
+						.displayName(YELLOW + "Font Size")
 						.lore(WHITE + "Current Font Size: " + GRAY + textLoader.getFontSize())
 						.build(),
-				clicker -> {
+				(clicker, clickType) -> {
 					textLoader.setFontSize(textLoader.getFontSize() + 2);
 				});
 	}
