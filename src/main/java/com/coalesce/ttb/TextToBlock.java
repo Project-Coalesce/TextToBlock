@@ -6,11 +6,9 @@ import com.coalesce.ttb.blocks.FontLoader;
 import com.coalesce.ttb.commands.TTBCommands;
 import com.coalesce.ttb.config.FontsConfig;
 import com.coalesce.ttb.session.SessionHolder;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.PluginManager;
 
 public final class TextToBlock extends CoPlugin implements Listener {
 
@@ -33,11 +31,7 @@ public final class TextToBlock extends CoPlugin implements Listener {
 				sessionHolder = new SessionHolder(this),
 				new TTBCommands(this));
 
-		//Might not be the best way to do this
-		PluginManager manager = Bukkit.getPluginManager();
-		manager.registerEvents(new IconMenuListener(), this);
-		manager.registerEvents(this, this);
-		
+		Arrays.asList(new Listener[] {this, new IconMenuListener()}).forEach(this::registerListener);
 	}
 
 	@Override
