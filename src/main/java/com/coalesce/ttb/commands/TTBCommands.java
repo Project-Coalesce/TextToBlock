@@ -10,7 +10,6 @@ import com.coalesce.ttb.config.FontsConfig;
 import com.coalesce.ttb.session.SessionHolder;
 import com.coalesce.ttb.session.TextSession;
 import org.bukkit.ChatColor;
-import org.jetbrains.annotations.NotNull;
 
 public final class TTBCommands extends CoModule {
 
@@ -18,7 +17,7 @@ public final class TTBCommands extends CoModule {
 	private FontLoader fontLoader;
 	private FontsConfig config;
 
-	public TTBCommands(@NotNull TextToBlock plugin) {
+	public TTBCommands(TextToBlock plugin) {
 		super(plugin, "TextToBlock Commands");
 		
 		this.fontLoader = plugin.getFontLoader();

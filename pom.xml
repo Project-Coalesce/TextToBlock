@@ -3,11 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>Core</artifactId>
+        <artifactId>parent</artifactId>
         <groupId>com.coalesce</groupId>
         <version>1.0</version>
-        <relativePath>../Core/pom.xml</relativePath>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>TextToBlock</artifactId>
@@ -23,13 +23,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--Restating and excluding dependencies-->
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>${versionAnnotations}</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
 
