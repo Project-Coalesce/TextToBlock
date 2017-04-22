@@ -5,6 +5,7 @@ import com.coalesce.gui.PlayerGui;
 import com.coalesce.ttb.TextToBlock;
 import com.coalesce.ttb.blocks.TextLoader;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import static org.bukkit.ChatColor.GRAY;
@@ -43,7 +44,33 @@ public final class TextMenu extends PlayerGui {
 						.lore(WHITE + "Current Font Size: " + GRAY + textLoader.getFontSize())
 						.build(),
 				(clicker, clickType) -> {
-					textLoader.setFontSize(textLoader.getFontSize() + 2);
+
+					float fontSize = textLoader.getFontSize();
+
+					switch (clickType){
+						case RIGHT:
+							fontSize--;
+							break;
+						case SHIFT_RIGHT:
+							fontSize -= 10;
+							break;
+						case LEFT:
+							fontSize++;
+							break;
+						case SHIFT_LEFT:
+							fontSize += 10;
+							break;
+					}
+
+					if (fontSize < 6){
+						fontSize = 6;
+					} else if (fontSize > plugin.getFontsConfig().getMaxFontSize()){
+						fontSize = plugin.getFontsConfig().getMaxFontSize();
+					}
+
+					textLoader.setFontSize(fontSize);
+					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
+
 				});
 	}
 }

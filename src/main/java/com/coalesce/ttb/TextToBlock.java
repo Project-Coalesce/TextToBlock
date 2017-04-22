@@ -1,12 +1,12 @@
 package com.coalesce.ttb;
 
-import com.coalesce.gui.IconMenuListener;
 import com.coalesce.plugin.CoPlugin;
 import com.coalesce.ttb.blocks.FontLoader;
 import com.coalesce.ttb.commands.TTBCommands;
 import com.coalesce.ttb.config.FontsConfig;
 import com.coalesce.ttb.session.SessionHolder;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -20,7 +20,7 @@ public final class TextToBlock extends CoPlugin implements Listener {
 	private SessionHolder sessionHolder;
 	
 	public TextToBlock() {
-		this.displayName = "TextToBlock";
+		this.displayName = ChatColor.YELLOW + "TextToBlock";
 	}
 
 	@Override
@@ -35,9 +35,7 @@ public final class TextToBlock extends CoPlugin implements Listener {
 
 		//Might not be the best way to do this
 		PluginManager manager = Bukkit.getPluginManager();
-		manager.registerEvents(new IconMenuListener(), this);
 		manager.registerEvents(this, this);
-		
 	}
 
 	@Override
