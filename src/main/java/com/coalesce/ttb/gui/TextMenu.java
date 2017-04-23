@@ -1,6 +1,5 @@
 package com.coalesce.ttb.gui;
 
-import com.coalesce.gui.ItemBuilder;
 import com.coalesce.gui.PlayerGui;
 import com.coalesce.ttb.TextToBlock;
 import com.coalesce.ttb.blocks.TextLoader;
@@ -9,8 +8,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import static org.bukkit.ChatColor.GRAY;
-import static org.bukkit.ChatColor.WHITE;
-import static org.bukkit.ChatColor.YELLOW;
 
 public final class TextMenu extends PlayerGui {
 
@@ -19,7 +16,7 @@ public final class TextMenu extends PlayerGui {
 	public TextMenu(TextToBlock plugin, String fontName, String text, Player player) {
 		super(plugin, 9, GRAY + "Text Menu");
 
-		textLoader = new TextLoader(plugin, text, fontName, player.getLocation());
+		/*textLoader = new TextLoader(plugin, text, fontName, player.getLocation());
 
 		//Text
 		addItem(viewer ->
@@ -43,6 +40,9 @@ public final class TextMenu extends PlayerGui {
 						.displayName(YELLOW + "Font Size")
 						.lore(WHITE + "Current Font Size: " + GRAY + textLoader.getFontSize())
 						.build(),
+				clicker -> {
+					textLoader.setFontSize(textLoader.getFontSize() + 2);
+				});
 				(clicker, clickType) -> {
 
 					float fontSize = textLoader.getFontSize();
@@ -71,6 +71,6 @@ public final class TextMenu extends PlayerGui {
 					textLoader.setFontSize(fontSize);
 					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
 
-				});
+				});*/
 	}
 }

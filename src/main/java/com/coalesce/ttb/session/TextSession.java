@@ -1,8 +1,6 @@
 package com.coalesce.ttb.session;
 
 import org.bukkit.block.BlockState;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -26,11 +24,11 @@ public final class TextSession {
 	 *
 	 * @param blockStates The premodified BlockStates
 	 */
-	public void cacheUndo(@NotNull Set<BlockState> blockStates) {
+	public void cacheUndo(Set<BlockState> blockStates) {
 		undo.push(blockStates);
 	}
 
-	private void cacheRedo(@NotNull Set<BlockState> blockStates) {
+	private void cacheRedo(Set<BlockState> blockStates) {
 		redo.push(blockStates);
 	}
 
@@ -76,7 +74,7 @@ public final class TextSession {
 		return true;
 	}
 
-	private @NotNull Set<BlockState> pullCurrent(@NotNull Set<BlockState> blockStates) {
+	private Set<BlockState> pullCurrent(Set<BlockState> blockStates) {
 		return blockStates.stream().map(blockState -> blockState.getBlock().getState()).collect(Collectors.toSet());
 	}
 
@@ -95,7 +93,7 @@ public final class TextSession {
 			stack.addFirst(operation);
 		}
 
-		private @Nullable Set<BlockState> pull() {
+		private Set<BlockState> pull() {
 			return stack.pollFirst();
 		}
 

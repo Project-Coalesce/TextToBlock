@@ -10,7 +10,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.PluginManager;
 
 public final class TextToBlock extends CoPlugin implements Listener {
 
@@ -33,9 +32,7 @@ public final class TextToBlock extends CoPlugin implements Listener {
 				sessionHolder = new SessionHolder(this),
 				new TTBCommands(this));
 
-		//Might not be the best way to do this
-		PluginManager manager = Bukkit.getPluginManager();
-		manager.registerEvents(this, this);
+		Arrays.asList(new Listener[] {this, new IconMenuListener()}).forEach(this::registerListener);
 	}
 
 	@Override
