@@ -60,7 +60,7 @@ public class TextLoader {
 
 			Rectangle bounds = font.getStringBounds(text, new FontRenderContext(null, false, false)).getBounds();
 			int width = (int)bounds.getWidth();
-			//Multiplying by 1.5 here because for some reason the font bounds dont take parts of the text (such as a y)
+			//Multiplying by 1.5 here because for some reason the font bounds don't take parts of the text (such as a y)
 			//that hang below the line
 			int height = (int)(bounds.getHeight() * 1.5d);
 

@@ -5,7 +5,6 @@ import com.coalesce.gui.PlayerGui;
 import com.coalesce.ttb.TextToBlock;
 import com.coalesce.ttb.blocks.TextLoader;
 import com.google.common.util.concurrent.ListenableFuture;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -24,8 +23,11 @@ public final class TextMenu extends PlayerGui {
 
 	private TextLoader textLoader;
 
+	private static short GREEN_DYE_DURABILITY = 10;
+	private static short RED_DYE_DURABILITY = 1;
+
 	public TextMenu(TextToBlock plugin, String fontName, String text, Player player) {
-		super(plugin, 9, GRAY + "Text Menu");
+		super(plugin, 9, DARK_GRAY + "Text Menu");
 
 		textLoader = new TextLoader(plugin, text, fontName, player.getLocation());
 
@@ -49,7 +51,7 @@ public final class TextMenu extends PlayerGui {
 		addItem(viewer ->
 				new ItemBuilder(Material.IRON_INGOT)
 						.displayName(YELLOW + "Font Size")
-						.lore(WHITE + "Current Font Size: " + GRAY + textLoader.getFontSize() + " " + System.currentTimeMillis())
+						.lore(WHITE + "Current Font Size: " + GRAY + textLoader.getFontSize())
 						.build(),
             
 				(clicker, clickType) -> {
@@ -83,6 +85,19 @@ public final class TextMenu extends PlayerGui {
 					update(clicker);
 				});
 
+		addItem(viewer ->
+				new ItemBuilder(Material.INK_SACK)
+						.displayName(YELLOW + "Underline")
+						.lore(textLoader.isUnderline() ? GREEN + "True" : RED + "False")
+						.durability(textLoader.isUnderline() ? GREEN_DYE_DURABILITY : RED_DYE_DURABILITY)
+						.build(),
+				(clicker, clickType) -> {
+
+					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
+					textLoader.setUnderline(!textLoader.isUnderline());
+
+				});
+
 		setItem(8,
 				viewer ->
 				new ItemBuilder(Material.CLAY_BRICK)
@@ -110,7 +125,6 @@ public final class TextMenu extends PlayerGui {
 						World world = textLoader.getOrigin().getWorld();
 
 						for (Vector vector : vectors) {
-							Bukkit.broadcastMessage(String.format("%d %d %d", vector.getBlockX(), vector.getBlockY(), vector.getBlockZ()));
 							vector.toLocation(world).getBlock().setType(material);
 						}
 
