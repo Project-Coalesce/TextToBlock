@@ -60,7 +60,9 @@ public class TextLoader {
 
 			Rectangle bounds = font.getStringBounds(text, new FontRenderContext(null, false, false)).getBounds();
 			int width = (int)bounds.getWidth();
-			int height = (int)bounds.getHeight();
+			//Multiplying by 1.5 here because for some reason the font bounds dont take parts of the text (such as a y)
+			//that hang below the line
+			int height = (int)(bounds.getHeight() * 1.5d);
 
 			BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
@@ -77,7 +79,8 @@ public class TextLoader {
 					// White (0) is the background. Anything else is a pixel we want
 					if (bufferedImage.getRGB(x, y) != 0) {
 						//Invert the heights, because the text normally renders upside down
-						textVectors.add(originVector.clone().add(orientation.xDelta.multiply(x)).add(orientation.yDelta.multiply(y)));
+						int realY = height - y;
+						textVectors.add(originVector.clone().add(orientation.xDelta.clone().multiply(x)).add(orientation.yDelta.clone().multiply(realY)));
 					}
 				}
 			}
