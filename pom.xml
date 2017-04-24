@@ -2,15 +2,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <artifactId>Core</artifactId>
+        <artifactId>parent</artifactId>
         <groupId>com.coalesce</groupId>
         <version>1.0</version>
         <relativePath>../Core/pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
 
     <artifactId>TextToBlock</artifactId>
+    <groupId>com.coalesce</groupId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
@@ -18,7 +25,7 @@
         <!--Core-->
         <dependency>
             <groupId>com.coalesce</groupId>
-            <artifactId>Core</artifactId>
+            <artifactId>core</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
