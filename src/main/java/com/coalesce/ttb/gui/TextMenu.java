@@ -23,9 +23,6 @@ public final class TextMenu extends PlayerGui {
 
 	private TextLoader textLoader;
 
-	private static short GREEN_DYE_DURABILITY = 10;
-	private static short RED_DYE_DURABILITY = 1;
-
 	public TextMenu(TextToBlock plugin, String fontName, String text, Player player) {
 		super(plugin, 9, DARK_GRAY + "Text Menu");
 
@@ -49,7 +46,7 @@ public final class TextMenu extends PlayerGui {
 
 		//Font size
 		addItem(viewer ->
-				new ItemBuilder(Material.IRON_INGOT)
+				new ItemBuilder(Material.PAPER)
 						.displayName(YELLOW + "Font Size")
 						.lore(WHITE + "Current Font Size: " + GRAY + textLoader.getFontSize())
 						.build(),
@@ -85,17 +82,46 @@ public final class TextMenu extends PlayerGui {
 					update(clicker);
 				});
 
+		//Underline
 		addItem(viewer ->
-				new ItemBuilder(Material.INK_SACK)
+				new ItemBuilder(Material.PAPER)
 						.displayName(YELLOW + "Underline")
 						.lore(textLoader.isUnderline() ? GREEN + "True" : RED + "False")
-						.durability(textLoader.isUnderline() ? GREEN_DYE_DURABILITY : RED_DYE_DURABILITY)
 						.build(),
 				(clicker, clickType) -> {
 
 					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
 					textLoader.setUnderline(!textLoader.isUnderline());
 
+					update(clicker);
+				});
+
+		//Italics
+		addItem(viewer ->
+						new ItemBuilder(Material.PAPER)
+								.displayName(YELLOW + "Italics")
+								.lore(textLoader.isItalics() ? GREEN + "True" : RED + "False")
+								.build(),
+				(clicker, clickType) -> {
+
+					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
+					textLoader.setItalics(!textLoader.isItalics());
+
+					update(clicker);
+				});
+
+		//Bold
+		addItem(viewer ->
+						new ItemBuilder(Material.PAPER)
+								.displayName(YELLOW + "Bold")
+								.lore(textLoader.isBold() ? GREEN + "True" : RED + "False")
+								.build(),
+				(clicker, clickType) -> {
+
+					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
+					textLoader.setBold(!textLoader.isBold());
+
+					update(clicker);
 				});
 
 		setItem(8,
