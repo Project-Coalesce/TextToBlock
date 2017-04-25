@@ -7,6 +7,7 @@ import com.coalesce.plugin.CoModule;
 import com.coalesce.ttb.TextToBlock;
 import com.coalesce.ttb.blocks.FontLoader;
 import com.coalesce.ttb.config.FontsConfig;
+import com.coalesce.ttb.gui.TextMenu;
 import com.coalesce.ttb.session.SessionHolder;
 import com.coalesce.ttb.session.TextSession;
 import org.bukkit.ChatColor;
@@ -26,9 +27,10 @@ public final class TTBCommands extends CoModule {
 		
 		CoCommand textCommand = new CommandBuilder(plugin, "text")
 				.executor(this::text)
-				.permission("ttb.generate")
-				.usage("/text <message>")
+				.usage("/text <font> <message>")
 				.description("Generates text from a TTF file.")
+				.permission("ttb.generate")
+				.minArgs(2)
 				.playerOnly()
 				.build();
 		
@@ -37,7 +39,7 @@ public final class TTBCommands extends CoModule {
 				.maxArgs(0)
 				.permission("ttb.undo")
 				.usage("/textundo")
-				.description("Undo's a previously generated font.")
+				.description("Undoes a previously generated font.")
 				.playerOnly()
 				.build();
 		
@@ -65,12 +67,14 @@ public final class TTBCommands extends CoModule {
 	}
 	
 	public void text(CommandContext context) {
-		StringBuilder builder = new StringBuilder();
-		for (String s : context.getArgs()) {
-			builder.append(s);
-			builder.append(" ");
-		}
-		String text = builder.toString();
+
+		getPlugin().getCoLogger().debug("Argument Length: " + context.getArgs().size());
+
+		String fontName = context.argAt(0);
+		String text = context.joinArgs(1);
+
+		new TextMenu((TextToBlock)getPlugin(), fontName, text, context.asPlayer()).open(context.asPlayer());
+
 	}
 	
 	public void undo(CommandContext context) {
