@@ -1,39 +1,39 @@
 package com.coalesce.ttb.config;
 
-import com.coalesce.config.yml.Entry;
-import com.coalesce.config.yml.YmlConfig;
+import com.coalesce.config.yml.YamlEntry;
+import com.coalesce.config.yml.YamlConfig;
 import com.coalesce.ttb.TextToBlock;
 import org.bukkit.Material;
 
 
-public final class FontsConfig extends YmlConfig {
+public final class FontsConfig extends YamlConfig {
 	
 	private final TextToBlock plugin;
-	private final YmlConfig config;
+	private final YamlConfig config;
 	
 	public FontsConfig(TextToBlock plugin) {
 		super("config", plugin);
 		this.plugin = plugin;
 		this.config = (FontsConfig) plugin.getConfig("config");
-		config.addEntry(new Entry(config, "font.maxFontSize", 100));
-		config.addEntry(new Entry(config, "font.fallbackFontSize", 12));
-		config.addEntry(new Entry(config, "font.fallbackFont", "blocked"));
-		config.addEntry(new Entry(config, "font.fallbackMaterial", Material.QUARTZ_BLOCK.name()));
-		config.addEntry(new Entry(config, "operations.historySize", 10));
+		config.addEntry(new YamlEntry(config, "font.maxFontSize", 100));
+		config.addEntry(new YamlEntry(config, "font.fallbackFontSize", 12));
+		config.addEntry(new YamlEntry(config, "font.fallbackFont", "blocked"));
+		config.addEntry(new YamlEntry(config, "font.fallbackMaterial", Material.QUARTZ_BLOCK.name()));
+		config.addEntry(new YamlEntry(config, "operations.historySize", 10));
 	}
 	
 	public int getMaxFontSize() {
 		return (int) getEntry("font.maxFontSize").getValue();
 	}
-
+	
 	public void setMaxFontSize(int maxFontSize) {
 		getEntry("font.maxFontSize").setValue(maxFontSize);
 	}
-
+	
 	public int getMaxOperations() {
 		return (int) getEntry("operations.historySize").getValue();
 	}
-
+	
 	public void setMaxOperations(int maxOperations) {
 		getEntry("operations.historySize").setValue(maxOperations);
 	}
@@ -61,5 +61,5 @@ public final class FontsConfig extends YmlConfig {
 	public void setFallbackMaterial(Material material) {
 		getEntry("font.fallbackMaterial").setValue(material.name());
 	}
-
+	
 }
