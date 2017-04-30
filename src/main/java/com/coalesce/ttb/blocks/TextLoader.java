@@ -8,7 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.util.Vector;
 
 import java.awt.*;
-import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +21,6 @@ public class TextLoader {
 	private Material material = Material.STONE;
 	private String fontName;
 	private float fontSize = 12;
-	private boolean underline = false;
 	private boolean italics = false;
 	private boolean bold = false;
 
@@ -40,6 +38,7 @@ public class TextLoader {
 		ListenableFuture<Font> fontFuture = plugin.getFontLoader().loadFont(fontName);
 		fontFuture.addListener(() -> {
 
+			//Get the font
 			Font font = null;
 			try {
 				font = fontFuture.get();
@@ -52,18 +51,17 @@ public class TextLoader {
 			font = font.deriveFont(fontSize);
 			if (bold) font = font.deriveFont(Font.BOLD);
 			if (italics) font = font.deriveFont(Font.ITALIC);
-			if (underline) font = font.deriveFont(TextAttribute.UNDERLINE_ON);
 
 			//Generate image
 			BufferedImage image = generateImage(font);
 
+			//Setup variables
 			Vector originVector = origin.toVector();
 			Set<Vector> textVectors = new HashSet<>();
 			int height = image.getHeight();
 			int width = image.getWidth();
 
 			for (int y = image.getMinY(); y < height; y++) {
-
 				StringBuilder sb = new StringBuilder();
 
 				for (int x = image.getMinX(); x < width; x++) {
@@ -100,14 +98,14 @@ public class TextLoader {
 		FontMetrics metrics = g.getFontMetrics();
 
 		int width = metrics.stringWidth(text);
-		int height = metrics.getMaxAscent() + metrics.getMaxDescent();
+		int height = metrics.getAscent() + metrics.getDescent();
 
 		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
 		Graphics2D imageGraphics = bufferedImage.createGraphics();
 		imageGraphics.setFont(font);
 		imageGraphics.setColor(Color.BLACK);
-		imageGraphics.drawString(text, 0, height - metrics.getMaxDescent());
+		imageGraphics.drawString(text, 0, height - metrics.getDescent());
 		imageGraphics.dispose();
 
 		return bufferedImage;
@@ -131,14 +129,6 @@ public class TextLoader {
 
 	public void setItalics(boolean italics) {
 		this.italics = italics;
-	}
-
-	public boolean isUnderline() {
-		return underline;
-	}
-
-	public void setUnderline(boolean underline) {
-		this.underline = underline;
 	}
 
 	public float getFontSize() {

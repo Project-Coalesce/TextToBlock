@@ -82,20 +82,6 @@ public final class TextMenu extends PlayerGui {
 					update(clicker);
 				});
 
-		//Underline
-		addItem(viewer ->
-				new ItemBuilder(Material.PAPER)
-						.displayName(YELLOW + "Underline")
-						.lore(textLoader.isUnderline() ? GREEN + "True" : RED + "False")
-						.build(),
-				(clicker, clickType) -> {
-
-					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
-					textLoader.setUnderline(!textLoader.isUnderline());
-
-					update(clicker);
-				});
-
 		//Italics
 		addItem(viewer ->
 						new ItemBuilder(Material.PAPER)
