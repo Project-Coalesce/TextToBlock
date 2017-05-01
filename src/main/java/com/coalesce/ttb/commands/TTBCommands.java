@@ -15,13 +15,15 @@ import org.bukkit.ChatColor;
 public final class TTBCommands extends CoModule {
 
 	private SessionHolder session;
-	private TextToBlock plugin;
+	private FontLoader fontLoader;
+	private FontsConfig config;
 
 	public TTBCommands(TextToBlock plugin) {
 		super(plugin, "TextToBlock Commands");
 		
+		this.fontLoader = plugin.getFontLoader();
 		this.session = plugin.getSessionHolder();
-		this.plugin = plugin;
+		this.config = plugin.getFontsConfig();
 		
 		CoCommand textCommand = new CommandBuilder(plugin, "text")
 				.executor(this::text)
@@ -77,19 +79,19 @@ public final class TTBCommands extends CoModule {
 	
 	public void undo(CommandContext context) {
 		if (getSession(context) == null) {
-			context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
+			context.send(ChatColor.RED + "Cannot perform operation.");
 			return;
 		}
-		if (!getSession(context).undo()) context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
+		if (!getSession(context).undo()) context.send(ChatColor.RED + "Cannot perform operation.");
 		return;
 	}
 	
 	public void redo(CommandContext context) {
 		if (getSession(context) == null) {
-			context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
+			context.send(ChatColor.RED + "Cannot perform operation.");
 			return;
 		}
-		if (!getSession(context).redo()) context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
+		if (!getSession(context).redo()) context.send(ChatColor.RED + "Cannot perform operation.");
 		return;
 	}
 	
