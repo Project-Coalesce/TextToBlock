@@ -77,19 +77,19 @@ public final class TTBCommands extends CoModule {
 	
 	public void undo(CommandContext context) {
 		if (getSession(context) == null) {
-			context.send(plugin.getFormatter().format(ChatColor.RED + "Cannot perform operation."));
+			context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
 			return;
 		}
-		if (!getSession(context).undo()) context.send(plugin.getFormatter().format(ChatColor.RED + "Cannot perform operation."));
+		if (!getSession(context).undo()) context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
 		return;
 	}
 	
 	public void redo(CommandContext context) {
 		if (getSession(context) == null) {
-			context.send(plugin.getFormatter().format(ChatColor.RED + "Cannot perform operation."));
+			context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
 			return;
 		}
-		if (!getSession(context).redo()) context.send(plugin.getFormatter().format(ChatColor.RED + "Cannot perform operation."));
+		if (!getSession(context).redo()) context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
 		return;
 	}
 	
