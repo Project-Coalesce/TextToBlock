@@ -50,9 +50,7 @@ public final class TTBCommands extends CoModule {
 				.playerOnly()
 				.build();
 				
-		plugin.addCommand(textCommand);
-		plugin.addCommand(undoCommand);
-		plugin.addCommand(redoCommand);
+		plugin.addCommand(textCommand, undoCommand, redoCommand);
 	}
 
 	@Override
