@@ -3,14 +3,16 @@ package com.coalesce.ttb.commands;
 import com.coalesce.command.CoCommand;
 import com.coalesce.command.CommandBuilder;
 import com.coalesce.command.CommandContext;
+import com.coalesce.command.tabcomplete.TabContext;
 import com.coalesce.plugin.CoModule;
 import com.coalesce.ttb.TextToBlock;
-import com.coalesce.ttb.blocks.FontLoader;
-import com.coalesce.ttb.config.FontsConfig;
 import com.coalesce.ttb.gui.TextMenu;
 import com.coalesce.ttb.session.SessionHolder;
 import com.coalesce.ttb.session.TextSession;
 import org.bukkit.ChatColor;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 public final class TTBCommands extends CoModule {
 
@@ -19,19 +21,12 @@ public final class TTBCommands extends CoModule {
 
 	public TTBCommands(TextToBlock plugin) {
 		super(plugin, "TextToBlock Commands");
-		
 		this.session = plugin.getSessionHolder();
 		this.plugin = plugin;
-		
-		CoCommand textCommand = new CommandBuilder(plugin, "text")
-				.executor(this::text)
-				.usage("/text <font> <message>")
-				.description("Generates text from a TTF file.")
-				.permission("ttb.generate")
-				.minArgs(2)
-				.playerOnly()
-				.build();
-		
+	}
+
+	@Override
+	protected void onEnable() throws Exception {
 		CoCommand undoCommand = new CommandBuilder(plugin, "textundo")
 				.executor(this::undo)
 				.maxArgs(0)
@@ -49,12 +44,19 @@ public final class TTBCommands extends CoModule {
 				.description("Redo's a previously undone font generation.")
 				.playerOnly()
 				.build();
-				
+		
+		CoCommand textCommand = new CommandBuilder(plugin, "text")
+				.executor(this::text)
+				.completer(this::fontCompleter)
+				.children(undoCommand, redoCommand)
+				.usage("/text <font> <message>")
+				.description("Generates text from a TTF file.")
+				.permission("ttb.generate")
+				.minArgs(2)
+				.playerOnly()
+				.build();
+		
 		plugin.addCommand(textCommand, undoCommand, redoCommand);
-	}
-
-	@Override
-	protected void onEnable() throws Exception {
 	}
 
 	@Override
@@ -62,16 +64,19 @@ public final class TTBCommands extends CoModule {
 
 	}
 	
+	
+	
 	public void text(CommandContext context) {
-
-		getPlugin().getCoLogger().debug("Argument Length: " + context.getArgs().size());
-
 		String fontName = context.argAt(0);
 		String text = context.joinArgs(1);
-
+		if (!plugin.getFontLoader().getLoadedFonts().contains(fontName)) context.pluginMessage(ChatColor.RED + "Font is not loaded.");
 		new TextMenu((TextToBlock)getPlugin(), fontName, text, context.asPlayer()).open(context.asPlayer());
-
 	}
+	
+	public void fontCompleter(TabContext context) {
+	}
+	
+	
 	
 	public void undo(CommandContext context) {
 		if (getSession(context) == null) {
@@ -82,6 +87,8 @@ public final class TTBCommands extends CoModule {
 		return;
 	}
 	
+	
+	
 	public void redo(CommandContext context) {
 		if (getSession(context) == null) {
 			context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
@@ -90,6 +97,8 @@ public final class TTBCommands extends CoModule {
 		if (!getSession(context).redo()) context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
 		return;
 	}
+	
+	
 	
 	private TextSession getSession(CommandContext context) {
 		return session.getSession(context.asPlayer());

@@ -18,7 +18,7 @@ public final class TextToBlock extends CoPlugin implements Listener {
 	private SessionHolder sessionHolder;
 	
 	public TextToBlock() {
-		this.displayName = ChatColor.YELLOW + "TextToBlock";
+		this.displayName = "TextToBlock";
 	}
 
 	@Override

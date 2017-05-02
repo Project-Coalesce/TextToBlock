@@ -9,8 +9,8 @@ import com.google.common.util.concurrent.MoreExecutors;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
@@ -23,6 +23,7 @@ public class FontLoader extends CoModule {
 	private static final ListeningExecutorService EXECUTOR = MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
 
 	private final Map<String, File> foundFonts = new HashMap<>();
+	private final List<String> fonts = new ArrayList<>();
 
 	public FontLoader(CoPlugin plugin) {
 		super(plugin, "Font Loader");
@@ -36,7 +37,10 @@ public class FontLoader extends CoModule {
 		File[] fontFiles = fontsFolder.listFiles(((dir, name) -> name.endsWith(".ttf")));
 		if (fontFiles == null) return;
 		
-		Stream.of(fontFiles).forEach(file -> foundFonts.put(file.getName().split("\\.")[0].toLowerCase(), file));
+		Stream.of(fontFiles).forEach(file -> {
+			foundFonts.put(file.getName().split("\\.")[0].toLowerCase(), file);
+			fonts.add(file.getName().split("\\.")[0].toLowerCase());
+		});
 	}
 
 	@Override
@@ -60,6 +64,10 @@ public class FontLoader extends CoModule {
 		}
 
 		return null;
+	}
+	
+	public List<String> getLoadedFonts() {
+		return fonts;
 	}
 
 }
