@@ -51,11 +51,12 @@ public final class TextMenu extends PlayerGui {
 						.lore(WHITE + "Current Font Size: " + GRAY + textLoader.getFontSize())
 						.build(),
             
-				(clicker, clickType) -> {
+				clickEvent -> {
 
+					Player clicker = (Player) clickEvent.getWhoClicked();
 					float fontSize = textLoader.getFontSize();
 
-					switch (clickType){
+					switch (clickEvent.getClick()){
 						case RIGHT:
 							fontSize--;
 							break;
@@ -88,8 +89,10 @@ public final class TextMenu extends PlayerGui {
 								.displayName(YELLOW + "Italics")
 								.lore(textLoader.isItalics() ? GREEN + "True" : RED + "False")
 								.build(),
-				(clicker, clickType) -> {
+				clickEvent -> {
 
+					Player clicker = (Player) clickEvent.getWhoClicked();
+					
 					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
 					textLoader.setItalics(!textLoader.isItalics());
 
@@ -102,8 +105,10 @@ public final class TextMenu extends PlayerGui {
 								.displayName(YELLOW + "Bold")
 								.lore(textLoader.isBold() ? GREEN + "True" : RED + "False")
 								.build(),
-				(clicker, clickType) -> {
+				clickEvent -> {
 
+					Player clicker = (Player) clickEvent.getWhoClicked();
+					
 					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
 					textLoader.setBold(!textLoader.isBold());
 
@@ -118,7 +123,7 @@ public final class TextMenu extends PlayerGui {
 						.itemFlags(ItemFlag.HIDE_ENCHANTS)
 						.enchant(Enchantment.DURABILITY, 1)
 						.build(),
-				(clicker, clickType) -> {
+				clickEvent -> {
 
 					ListenableFuture<Set<Vector>> futureVectors = textLoader.getVectors();
 
