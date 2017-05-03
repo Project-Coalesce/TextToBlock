@@ -69,11 +69,16 @@ public final class TTBCommands extends CoModule {
 	public void text(CommandContext context) {
 		String fontName = context.argAt(0);
 		String text = context.joinArgs(1);
-		if (!plugin.getFontLoader().getLoadedFonts().contains(fontName)) context.pluginMessage(ChatColor.RED + "Font is not loaded.");
+		if (!plugin.getFontLoader().getLoadedFonts().contains(fontName)) {
+			context.pluginMessage(ChatColor.RED + "Font is not loaded.");
+			return;
+		}
 		new TextMenu((TextToBlock)getPlugin(), fontName, text, context.asPlayer()).open(context.asPlayer());
 	}
 	
 	public void fontCompleter(TabContext context) {
+		List<String> fonts = plugin.getFontLoader().getLoadedFonts();
+		context.completionAt(0, fonts.toArray(new String[fonts.size()]));
 	}
 	
 	
