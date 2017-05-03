@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
 
-public class TextLoader {
+public final class TextLoader {
 
 	private TextToBlock plugin;
 	private Location origin;

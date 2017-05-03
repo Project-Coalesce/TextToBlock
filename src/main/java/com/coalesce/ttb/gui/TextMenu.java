@@ -8,6 +8,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -124,7 +125,8 @@ public final class TextMenu extends PlayerGui {
 						.enchant(Enchantment.DURABILITY, 1)
 						.build(),
 				clickEvent -> {
-
+					
+					Set<BlockState> cache = new HashSet<>();
 					ListenableFuture<Set<Vector>> futureVectors = textLoader.getVectors();
 
 					futureVectors.addListener(() -> {
@@ -142,11 +144,13 @@ public final class TextMenu extends PlayerGui {
 						World world = textLoader.getOrigin().getWorld();
 
 						for (Vector vector : vectors) {
+							cache.add(vector.toLocation(world).getBlock().getState());
 							vector.toLocation(world).getBlock().setType(material);
 						}
+						plugin.getSessionHolder().getSession(player).cacheUndo(cache);
 
 					}, runnable -> plugin.getServer().getScheduler().runTask(plugin, runnable));
-
+					
 				});
 	}
 }

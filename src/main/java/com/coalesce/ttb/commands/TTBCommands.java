@@ -12,7 +12,6 @@ import com.coalesce.ttb.session.TextSession;
 import org.bukkit.ChatColor;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public final class TTBCommands extends CoModule {
 
@@ -41,14 +40,13 @@ public final class TTBCommands extends CoModule {
 				.maxArgs(0)
 				.permission("ttb.undo")
 				.usage("/textredo")
-				.description("Redo's a previously undone font generation.")
+				.description("Redoes a previously undone font generation.")
 				.playerOnly()
 				.build();
 		
 		CoCommand textCommand = new CommandBuilder(plugin, "text")
 				.executor(this::text)
 				.completer(this::fontCompleter)
-				.children(undoCommand, redoCommand)
 				.usage("/text <font> <message>")
 				.description("Generates text from a TTF file.")
 				.permission("ttb.generate")
