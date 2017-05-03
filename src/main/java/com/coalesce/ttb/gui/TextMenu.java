@@ -27,7 +27,7 @@ public final class TextMenu extends PlayerGui {
 	public TextMenu(TextToBlock plugin, String fontName, String text, Player player) {
 		super(plugin, 9, DARK_GRAY + "Text Menu");
 
-		textLoader = new TextLoader(plugin, text, fontName, player.getLocation());
+		textLoader = new TextLoader(plugin, text, fontName, Material.STONE, player.getLocation());
 
 		//Text
 		addItem(viewer ->
@@ -134,9 +134,7 @@ public final class TextMenu extends PlayerGui {
 						Set<Vector> vectors = new HashSet<>();
 						try {
 							vectors = futureVectors.get();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						} catch (ExecutionException e) {
+						} catch (InterruptedException | ExecutionException e) {
 							e.printStackTrace();
 						}
 

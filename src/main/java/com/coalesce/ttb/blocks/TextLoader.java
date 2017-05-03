@@ -18,17 +18,18 @@ public final class TextLoader {
 	private Location origin;
 	private TextLoader.TextOrientation orientation = TextOrientation.NORTH;
 	private String text;
-	private Material material = Material.STONE;
+	private Material material;
 	private String fontName;
 	private float fontSize = 12;
 	private boolean italics = false;
 	private boolean bold = false;
 
-	public TextLoader(TextToBlock plugin, String text, String fontName, Location origin){
+	public TextLoader(TextToBlock plugin, String text, String fontName, Material material, Location origin){
 		this.plugin = plugin;
 		this.text = text;
 		this.fontName = fontName;
 		this.origin = origin;
+		this.material = material;
 	}
 
 	public ListenableFuture<Set<Vector>> getVectors(){
@@ -37,7 +38,9 @@ public final class TextLoader {
 
 		ListenableFuture<Font> fontFuture = plugin.getFontLoader().loadFont(fontName);
 		fontFuture.addListener(() -> {
-
+			
+			if (material == null) material = plugin.getFontsConfig().getFallbackMaterial();
+			
 			//Get the font
 			Font font = null;
 			try {

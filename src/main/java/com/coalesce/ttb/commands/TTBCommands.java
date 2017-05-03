@@ -64,7 +64,7 @@ public final class TTBCommands extends CoModule {
 	
 	
 	
-	public void text(CommandContext context) {
+	private void text(CommandContext context) {
 		String fontName = context.argAt(0);
 		String text = context.joinArgs(1);
 		if (!plugin.getFontLoader().getLoadedFonts().contains(fontName)) {
@@ -74,14 +74,14 @@ public final class TTBCommands extends CoModule {
 		new TextMenu((TextToBlock)getPlugin(), fontName, text, context.asPlayer()).open(context.asPlayer());
 	}
 	
-	public void fontCompleter(TabContext context) {
+	private void fontCompleter(TabContext context) {
 		List<String> fonts = plugin.getFontLoader().getLoadedFonts();
 		context.completionAt(0, fonts.toArray(new String[fonts.size()]));
 	}
 	
 	
 	
-	public void undo(CommandContext context) {
+	private void undo(CommandContext context) {
 		if (getSession(context) == null) {
 			context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
 			return;
@@ -92,7 +92,7 @@ public final class TTBCommands extends CoModule {
 	
 	
 	
-	public void redo(CommandContext context) {
+	private void redo(CommandContext context) {
 		if (getSession(context) == null) {
 			context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
 			return;
