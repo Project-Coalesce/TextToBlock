@@ -27,13 +27,13 @@ public final class TextMenu extends PlayerGui {
 	public TextMenu(TextToBlock plugin, String fontName, String text, Player player) {
 		super(plugin, 9, DARK_GRAY + "Text Menu");
 
-		textLoader = new TextLoader(plugin, text, fontName, Material.STONE, player.getLocation());
+		textLoader = new TextLoader(plugin, text, fontName, plugin.getFontsConfig().getFallbackMaterial(), player.getLocation());
 
 		//Text
 		addItem(viewer ->
 				new ItemBuilder(Material.BOOK)
 						.displayName(YELLOW + "Text")
-						.lore(text)
+						.lore("Current Text:" + GRAY + ITALIC +text)
 						.build()
 				, null);
 
@@ -41,7 +41,7 @@ public final class TextMenu extends PlayerGui {
 		addItem(viewer ->
 				new ItemBuilder(Material.PAPER)
 						.displayName(YELLOW + "Font")
-						.lore(WHITE + "Current Font: " + GRAY + textLoader.getFontName())
+						.lore(WHITE + "Current Font: " + GRAY + ITALIC + textLoader.getFontName())
 						.build()
 				, null);
 
@@ -49,7 +49,7 @@ public final class TextMenu extends PlayerGui {
 		addItem(viewer ->
 				new ItemBuilder(Material.PAPER)
 						.displayName(YELLOW + "Font Size")
-						.lore(WHITE + "Current Font Size: " + GRAY + textLoader.getFontSize())
+						.lore(WHITE + "Current Font Size: " + GRAY + ITALIC + textLoader.getFontSize())
 						.build(),
             
 				clickEvent -> {
@@ -114,6 +114,21 @@ public final class TextMenu extends PlayerGui {
 					textLoader.setBold(!textLoader.isBold());
 
 					update(clicker);
+				});
+		
+		//Material viewer
+		addItem(viewer ->
+						new ItemBuilder(Material.PAPER)
+								.displayName(YELLOW + "Material")
+								.lore("Current: " + GRAY + Material.STONE.name().toLowerCase())
+								.build(),
+				clickEvent -> {
+					
+					Player clicker = (Player) clickEvent.getWhoClicked();
+					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
+					clicker.closeInventory();
+					new MaterialMenu(plugin, Material.STONE, clicker, fontName, text).open(clicker);
+					//update(clicker);
 				});
 
 		setItem(8,

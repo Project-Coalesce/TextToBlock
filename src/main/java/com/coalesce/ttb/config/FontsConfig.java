@@ -55,7 +55,7 @@ public final class FontsConfig extends YamlConfig {
 	}
 	
 	public Material getFallbackMaterial() {
-		return (Material) getEntry("font.fallbackMaterial").getValue();
+		return Material.valueOf((String)getEntry("font.fallbackMaterial").getValue());
 	}
 	
 	public void setFallbackMaterial(Material material) {
