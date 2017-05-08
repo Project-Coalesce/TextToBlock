@@ -24,23 +24,23 @@ public final class TextMenu extends PlayerGui {
 
 	private TextLoader textLoader;
 
-	public TextMenu(TextToBlock plugin, String fontName, String text, Player player) {
+	public TextMenu(TextToBlock plugin, String fontName, String text, Player player, Material material) {
 		super(plugin, 9, DARK_GRAY + "Text Menu");
 
-		textLoader = new TextLoader(plugin, text, fontName, plugin.getFontsConfig().getFallbackMaterial(), player.getLocation());
+		textLoader = new TextLoader(plugin, text, fontName, material, player.getLocation());
 
 		//Text
 		addItem(viewer ->
 				new ItemBuilder(Material.BOOK)
-						.displayName(YELLOW + "Text")
-						.lore("Current Text:" + GRAY + ITALIC +text)
+						.displayName(YELLOW + "" + BOLD + "Text")
+						.lore("Current Text: " + GRAY + ITALIC + text)
 						.build()
 				, null);
 
 		//Font
 		addItem(viewer ->
 				new ItemBuilder(Material.PAPER)
-						.displayName(YELLOW + "Font")
+						.displayName(YELLOW + "" + BOLD + "Font")
 						.lore(WHITE + "Current Font: " + GRAY + ITALIC + textLoader.getFontName())
 						.build()
 				, null);
@@ -48,7 +48,7 @@ public final class TextMenu extends PlayerGui {
 		//Font size
 		addItem(viewer ->
 				new ItemBuilder(Material.PAPER)
-						.displayName(YELLOW + "Font Size")
+						.displayName(YELLOW + "" + BOLD + "Font Size")
 						.lore(WHITE + "Current Font Size: " + GRAY + ITALIC + textLoader.getFontSize())
 						.build(),
             
@@ -87,7 +87,7 @@ public final class TextMenu extends PlayerGui {
 		//Italics
 		addItem(viewer ->
 						new ItemBuilder(Material.PAPER)
-								.displayName(YELLOW + "Italics")
+								.displayName(YELLOW + "" + BOLD + "Italics")
 								.lore(textLoader.isItalics() ? GREEN + "True" : RED + "False")
 								.build(),
 				clickEvent -> {
@@ -103,7 +103,7 @@ public final class TextMenu extends PlayerGui {
 		//Bold
 		addItem(viewer ->
 						new ItemBuilder(Material.PAPER)
-								.displayName(YELLOW + "Bold")
+								.displayName(YELLOW + "" + BOLD + "Bold")
 								.lore(textLoader.isBold() ? GREEN + "True" : RED + "False")
 								.build(),
 				clickEvent -> {
@@ -118,24 +118,23 @@ public final class TextMenu extends PlayerGui {
 		
 		//Material viewer
 		addItem(viewer ->
-						new ItemBuilder(Material.PAPER)
-								.displayName(YELLOW + "Material")
-								.lore("Current: " + GRAY + Material.STONE.name().toLowerCase())
+						new ItemBuilder(material)
+								.displayName(YELLOW + "" + BOLD + "Material")
+								.lore("Current: " + GRAY + ITALIC + material.toString().substring(0, 1).toUpperCase() + material.toString().substring(1))
 								.build(),
 				clickEvent -> {
-					
 					Player clicker = (Player) clickEvent.getWhoClicked();
 					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
 					clicker.closeInventory();
-					new MaterialMenu(plugin, Material.STONE, clicker, fontName, text).open(clicker);
-					//update(clicker);
+					new MaterialMenu(plugin, material, clicker, fontName, text);
+					update(clicker);
 				});
 
 		setItem(8,
 				viewer ->
 				new ItemBuilder(Material.CLAY_BRICK)
-						.displayName(YELLOW + "Build")
-						.lore(GRAY + "Click here to build the text")
+						.displayName(YELLOW + "" + BOLD + "Build")
+						.lore(GRAY + "" + ITALIC + "Click here to build the text")
 						.itemFlags(ItemFlag.HIDE_ENCHANTS)
 						.enchant(Enchantment.DURABILITY, 1)
 						.build(),
@@ -152,8 +151,7 @@ public final class TextMenu extends PlayerGui {
 						} catch (InterruptedException | ExecutionException e) {
 							e.printStackTrace();
 						}
-
-						Material material = textLoader.getMaterial();
+						
 						World world = textLoader.getOrigin().getWorld();
 
 						for (Vector vector : vectors) {

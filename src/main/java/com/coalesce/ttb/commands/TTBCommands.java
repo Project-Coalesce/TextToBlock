@@ -71,7 +71,7 @@ public final class TTBCommands extends CoModule {
 			context.pluginMessage(ChatColor.RED + "Font is not loaded.");
 			return;
 		}
-		new TextMenu((TextToBlock)getPlugin(), fontName, text, context.asPlayer()).open(context.asPlayer());
+		new TextMenu(plugin, fontName, text, context.asPlayer(), plugin.getFontsConfig().getFallbackMaterial()).open(context.asPlayer());
 	}
 	
 	private void fontCompleter(TabContext context) {
