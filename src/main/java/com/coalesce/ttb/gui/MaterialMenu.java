@@ -1,6 +1,7 @@
 package com.coalesce.ttb.gui;
 
 import com.coalesce.gui.ItemBuilder;
+import com.coalesce.gui.SinglePlayerGui;
 import com.coalesce.ttb.TextToBlock;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -15,7 +16,7 @@ import java.util.stream.Stream;
 
 import static org.bukkit.ChatColor.*;
 
-public final class MaterialMenu extends PlayerInv {
+public final class MaterialMenu extends SinglePlayerGui {
 	
 	private final TextToBlock plugin;
 	private Deque<Material> used;
@@ -24,9 +25,6 @@ public final class MaterialMenu extends PlayerInv {
 	private int lastPage;
 	private int index;
 	private int page;
-	
-	
-	
 	
 	public MaterialMenu(TextToBlock plugin, Material currentBlock, Player player, String fontName, String text) {
 		super(plugin, 54, DARK_GRAY + "Material Selection", player);
