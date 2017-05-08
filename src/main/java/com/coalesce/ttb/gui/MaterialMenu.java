@@ -184,9 +184,8 @@ public final class MaterialMenu extends PlayerInv {
 						user -> new ItemBuilder(used.pop()).build(),
 						clickEvent -> {
 							Player clicker = (Player)clickEvent.getWhoClicked();
-							selection = getInventory().getItem(clickEvent.getSlot()).getType();
-							ItemStack stack = new ItemStack(selection);
-							this.durability = stack.getDurability();
+							selection = clickEvent.getCurrentItem().getType();
+							this.durability = clickEvent.getCurrentItem().getDurability();
 							clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
 							update();
 						});
