@@ -126,7 +126,7 @@ public final class TextMenu extends PlayerGui {
 					Player clicker = (Player) clickEvent.getWhoClicked();
 					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
 					clicker.closeInventory();
-					new MaterialMenu(plugin, material, clicker, fontName, text);
+					new MaterialMenu(plugin, material, clicker, fontName, text).open(player);
 					update(clicker);
 				});
 
