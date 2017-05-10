@@ -79,7 +79,7 @@ public class MaterialGui extends PlayerGui {
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
 					clicker.playSound(clicker.getLocation(), ACTION_SOUND, 3, 1);
-					previous.setMaterial(selection);
+					previous.getTextLoader().setMaterial(selection);
 					previous.open(clicker);
 				});
 
