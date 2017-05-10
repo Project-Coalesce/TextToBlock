@@ -18,7 +18,6 @@ public final class TextLoader {
 	private Location origin;
 	private TextLoader.TextOrientation orientation = TextOrientation.NORTH;
 	private String text;
-	private Material material;
 	private String fontName;
 	private float fontSize = 12;
 	private boolean italics = false;
@@ -29,7 +28,6 @@ public final class TextLoader {
 		this.text = text;
 		this.fontName = fontName;
 		this.origin = origin;
-		this.material = material;
 	}
 
 	public ListenableFuture<Set<Vector>> getVectors(){
@@ -38,8 +36,6 @@ public final class TextLoader {
 
 		ListenableFuture<Font> fontFuture = plugin.getFontLoader().loadFont(fontName);
 		fontFuture.addListener(() -> {
-			
-			if (material == null) material = plugin.getFontsConfig().getFallbackMaterial();
 			
 			//Get the font
 			Font font = null;
@@ -148,14 +144,6 @@ public final class TextLoader {
 
 	public void setFontName(String fontName) {
 		this.fontName = fontName;
-	}
-
-	public Material getMaterial() {
-		return material;
-	}
-
-	public void setMaterial(Material material) {
-		this.material = material;
 	}
 
 	public String getText() {

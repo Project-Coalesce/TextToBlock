@@ -23,7 +23,7 @@ public class MaterialGui extends PlayerGui {
 
     private Material selection;
     private int currentPage;
-	private final TextMenu previous;
+	private final TextMenu previousMenu;
 
     private static final int GUI_ROWS = 6;
     private static final int MATERIAL_ROWS = 5;
@@ -32,12 +32,20 @@ public class MaterialGui extends PlayerGui {
 	private static final Sound INVALID_ACTION_SOUND = Sound.BLOCK_ANVIL_PLACE;
     private static ArrayList<Material> validBuildMaterials;
 
-    public MaterialGui(CoPlugin plugin, Material selection, TextMenu previous) {
+    public MaterialGui(CoPlugin plugin, Material selection, TextMenu previousMenu) {
         super(plugin, GUI_ROWS * 9, DARK_GRAY + "Material Menu");
 
         this.selection = selection;
         this.currentPage = 0; //Page numbers start at 0
-		this.previous = previous;
+		this.previousMenu = previousMenu;
+
+		setupControlBar();
+		setMaterials();
+
+    }
+
+	private void setupControlBar(){
+
 		final int totalPages = (getValidBuildMaterials().size() / (MATERIAL_ROWS * 9)) + 1;
 
 		//Previous Page
@@ -79,8 +87,9 @@ public class MaterialGui extends PlayerGui {
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
 					clicker.playSound(clicker.getLocation(), ACTION_SOUND, 3, 1);
-					previous.getTextLoader().setMaterial(selection);
-					previous.open(clicker);
+					this.previousMenu.setMaterial(selection);
+					System.out.println(this.previousMenu.getMaterial());
+					this.previousMenu.open(clicker);
 				});
 
 		//Filler
@@ -176,9 +185,7 @@ public class MaterialGui extends PlayerGui {
 					update(clicker);
 				});
 
-		setMaterials();
-
-    }
+	}
 
     private void setMaterials(){
 

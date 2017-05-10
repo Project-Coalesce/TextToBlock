@@ -23,10 +23,12 @@ import static org.bukkit.ChatColor.*;
 public final class TextMenu extends PlayerGui {
 
 	private TextLoader textLoader;
+	private Material material;
 
 	public TextMenu(TextToBlock plugin, String fontName, String text, Player player, Material material) {
 		super(plugin, 9, DARK_GRAY + "Text Menu");
 
+		this.material = material; //Default material
 		textLoader = new TextLoader(plugin, text, fontName, material, player.getLocation());
 
 		setupIcons(plugin);
@@ -123,16 +125,16 @@ public final class TextMenu extends PlayerGui {
 
 		//Material viewer
 		addItem(viewer ->
-						new ItemBuilder(textLoader.getMaterial())
+						new ItemBuilder(material)
 								.displayName(YELLOW + "" + BOLD + "Material")
-								.lore("Current: " + GRAY + ITALIC + textLoader.getMaterial().toString().substring(0, 1).toUpperCase() + textLoader.getMaterial().toString().substring(1))
+								.lore("Current: " + GRAY + ITALIC + material.toString().substring(0, 1).toUpperCase() + material.toString().substring(1))
 								.build(),
 				clickEvent -> {
 					Player clicker = (Player) clickEvent.getWhoClicked();
 					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
 					clicker.closeInventory();
 					//TODO: This will change
-					new MaterialGui(plugin, textLoader.getMaterial(), this).open(clicker);
+					new MaterialGui(plugin, material, this).open(clicker);
 					update(clicker);
 				});
 
@@ -162,7 +164,7 @@ public final class TextMenu extends PlayerGui {
 
 						for (Vector vector : vectors) {
 							cache.add(vector.toLocation(world).getBlock().getState());
-							vector.toLocation(world).getBlock().setType(textLoader.getMaterial());
+							vector.toLocation(world).getBlock().setType(material);
 						}
 						plugin.getSessionHolder().getSession((Player) clickEvent.getWhoClicked()).cacheUndo(cache);
 
@@ -172,7 +174,11 @@ public final class TextMenu extends PlayerGui {
 
 	}
 
-	public TextLoader getTextLoader(){
-		return textLoader;
+	public Material getMaterial() {
+		return material;
+	}
+
+	public void setMaterial(Material material) {
+		this.material = material;
 	}
 }
