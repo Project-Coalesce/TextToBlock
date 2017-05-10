@@ -118,15 +118,16 @@ public final class TextMenu extends PlayerGui {
 		
 		//Material viewer
 		addItem(viewer ->
-						new ItemBuilder(material)
+						new ItemBuilder(textLoader.getMaterial())
 								.displayName(YELLOW + "" + BOLD + "Material")
-								.lore("Current: " + GRAY + ITALIC + material.toString().substring(0, 1).toUpperCase() + material.toString().substring(1))
+								.lore("Current: " + GRAY + ITALIC + textLoader.getMaterial().toString().substring(0, 1).toUpperCase() + textLoader.getMaterial().toString().substring(1))
 								.build(),
 				clickEvent -> {
 					Player clicker = (Player) clickEvent.getWhoClicked();
 					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
 					clicker.closeInventory();
-					new MaterialMenu(plugin, material, clicker, fontName, text).open(player);
+					//TODO: This will change
+					new MaterialGui(plugin, textLoader.getMaterial(), this).open(player);
 					update(clicker);
 				});
 
@@ -163,5 +164,9 @@ public final class TextMenu extends PlayerGui {
 					}, runnable -> plugin.getServer().getScheduler().runTask(plugin, runnable));
 					
 				});
+	}
+
+	public void setMaterial(Material material){
+		textLoader.setMaterial(material);
 	}
 }
