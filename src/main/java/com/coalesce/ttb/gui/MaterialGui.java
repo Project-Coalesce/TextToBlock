@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 
 import static org.bukkit.ChatColor.*;
 
-public class MaterialGui extends PlayerGui {
+public final class MaterialGui extends PlayerGui {
 
     private Material selection;
     private int currentPage;
@@ -90,6 +90,7 @@ public class MaterialGui extends PlayerGui {
 					this.previousMenu.setMaterial(selection);
 					System.out.println(this.previousMenu.getMaterial());
 					this.previousMenu.open(clicker);
+					this.previousMenu.update(clicker);
 				});
 
 		//Filler

@@ -127,7 +127,7 @@ public final class TextMenu extends PlayerGui {
 		addItem(viewer ->
 						new ItemBuilder(material)
 								.displayName(YELLOW + "" + BOLD + "Material")
-								.lore("Current: " + GRAY + ITALIC + material.toString().substring(0, 1).toUpperCase() + material.toString().substring(1))
+								.lore("Current: " + GRAY + ITALIC + material.toString().substring(0, 1).toUpperCase() + material.toString().substring(1).toLowerCase().replace("_", " "))
 								.build(),
 				clickEvent -> {
 					Player clicker = (Player) clickEvent.getWhoClicked();

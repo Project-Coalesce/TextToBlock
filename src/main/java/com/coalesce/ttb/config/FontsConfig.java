@@ -15,15 +15,15 @@ public final class FontsConfig extends YamlConfig {
 		super("config", plugin);
 		this.plugin = plugin;
 		this.config = (FontsConfig) plugin.getConfig("config");
-		config.addEntry(new YamlEntry(config, "font.maxFontSize", 100));
-		config.addEntry(new YamlEntry(config, "font.fallbackFontSize", 12));
-		config.addEntry(new YamlEntry(config, "font.fallbackFont", "blocked"));
-		config.addEntry(new YamlEntry(config, "font.fallbackMaterial", Material.QUARTZ_BLOCK.name()));
-		config.addEntry(new YamlEntry(config, "operations.historySize", 10));
+		addEntry(new YamlEntry(config, "font.maxFontSize", 100));
+		addEntry(new YamlEntry(config, "font.fallbackFontSize", 12));
+		addEntry(new YamlEntry(config, "font.fallbackFont", "blocked"));
+		addEntry(new YamlEntry(config, "font.fallbackMaterial", Material.QUARTZ_BLOCK.name()));
+		addEntry(new YamlEntry(config, "operations.historySize", 10));
 	}
 	
 	public int getMaxFontSize() {
-		return (int) getEntry("font.maxFontSize").getValue();
+		return getInt("font.maxFontSize");
 	}
 	
 	public void setMaxFontSize(int maxFontSize) {
@@ -31,7 +31,7 @@ public final class FontsConfig extends YamlConfig {
 	}
 	
 	public int getMaxOperations() {
-		return (int) getEntry("operations.historySize").getValue();
+		return getInt("operations.historySize");
 	}
 	
 	public void setMaxOperations(int maxOperations) {
@@ -39,7 +39,7 @@ public final class FontsConfig extends YamlConfig {
 	}
 	
 	public String getFallbackFont() {
-		return (String) config.getEntry("font.fallbackFont").getValue();
+		return getString("font.fallbackFont");
 	}
 	
 	public void setFallbackFont(String fallbackFont) {
@@ -47,15 +47,15 @@ public final class FontsConfig extends YamlConfig {
 	}
 	
 	public float getFallbackFontSize() {
-		return (float) getEntry("font.fallbackFontSize").getValue();
+		return getInt("font.fallbackFontSize");
 	}
 	
 	public void setFallbackFontSize(float fallbackFontSize) {
-		config.getEntry("font.fallbackFontSize").setValue(fallbackFontSize);
+		getEntry("font.fallbackFontSize").setValue(fallbackFontSize);
 	}
 	
 	public Material getFallbackMaterial() {
-		return Material.valueOf((String)getEntry("font.fallbackMaterial").getValue());
+		return Material.valueOf(getString("font.fallbackMaterial"));
 	}
 	
 	public void setFallbackMaterial(Material material) {
