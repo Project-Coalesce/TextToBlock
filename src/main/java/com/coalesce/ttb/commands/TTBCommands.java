@@ -6,7 +6,7 @@ import com.coalesce.command.CommandContext;
 import com.coalesce.command.tabcomplete.TabContext;
 import com.coalesce.plugin.CoModule;
 import com.coalesce.ttb.TextToBlock;
-import com.coalesce.ttb.gui.TextMenu;
+import com.coalesce.ttb.gui.TextGui;
 import com.coalesce.ttb.session.SessionHolder;
 import com.coalesce.ttb.session.TextSession;
 import org.bukkit.ChatColor;
@@ -71,7 +71,7 @@ public final class TTBCommands extends CoModule {
 			context.pluginMessage(ChatColor.RED + "Font is not loaded.");
 			return;
 		}
-		new TextMenu(plugin, fontName, text, context.asPlayer(), plugin.getFontsConfig().getFallbackMaterial()).open(context.asPlayer());
+		new TextGui(plugin, fontName, text, context.asPlayer(), plugin.getFontsConfig().getFallbackMaterial()).open(context.asPlayer());
 	}
 	
 	private void fontCompleter(TabContext context) {

@@ -15,11 +15,11 @@ public final class FontsConfig extends YamlConfig {
 		super("config", plugin);
 		this.plugin = plugin;
 		this.config = (FontsConfig) plugin.getConfig("config");
-		addEntry(new YamlEntry(config, "font.maxFontSize", 100));
-		addEntry(new YamlEntry(config, "font.fallbackFontSize", 12));
-		addEntry(new YamlEntry(config, "font.fallbackFont", "blocked"));
-		addEntry(new YamlEntry(config, "font.fallbackMaterial", Material.QUARTZ_BLOCK.name()));
-		addEntry(new YamlEntry(config, "operations.historySize", 10));
+		addEntry("font.maxFontSize", 100);
+		addEntry("font.fallbackFontSize", 12);
+		addEntry("font.fallbackFont", "blocked");
+		addEntry("font.fallbackMaterial", Material.QUARTZ_BLOCK.name());
+		addEntry("operations.historySize", 10);
 	}
 	
 	public int getMaxFontSize() {

@@ -20,12 +20,12 @@ import java.util.concurrent.ExecutionException;
 
 import static org.bukkit.ChatColor.*;
 
-public final class TextMenu extends PlayerGui {
+public final class TextGui extends PlayerGui {
 
 	private TextLoader textLoader;
 	private Material material;
 
-	public TextMenu(TextToBlock plugin, String fontName, String text, Player player, Material material) {
+	public TextGui(TextToBlock plugin, String fontName, String text, Player player, Material material) {
 		super(plugin, 9, DARK_GRAY + "Text Menu");
 
 		this.material = material; //Default material

@@ -23,7 +23,7 @@ public final class MaterialGui extends PlayerGui {
 
     private Material selection;
     private int currentPage;
-	private final TextMenu previousMenu;
+	private final TextGui previousMenu;
 
     private static final int GUI_ROWS = 6;
     private static final int MATERIAL_ROWS = 5;
@@ -32,7 +32,7 @@ public final class MaterialGui extends PlayerGui {
 	private static final Sound INVALID_ACTION_SOUND = Sound.BLOCK_ANVIL_PLACE;
     private static ArrayList<Material> validBuildMaterials;
 
-    public MaterialGui(CoPlugin plugin, Material selection, TextMenu previousMenu) {
+    public MaterialGui(CoPlugin plugin, Material selection, TextGui previousMenu) {
         super(plugin, GUI_ROWS * 9, DARK_GRAY + "Material Menu");
 
         this.selection = selection;

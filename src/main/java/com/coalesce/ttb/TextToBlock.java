@@ -16,14 +16,9 @@ public final class TextToBlock extends CoPlugin implements Listener {
 
 	private FontLoader fontLoader;
 	private SessionHolder sessionHolder;
-	
-	public TextToBlock() {
-		this.displayName = "TextToBlock";
-	}
 
 	@Override
 	public void onPluginEnable() throws Exception {
-		
 		fontsConfig = new FontsConfig(this);
 
 		addModules(
