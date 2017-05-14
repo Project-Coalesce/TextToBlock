@@ -12,6 +12,9 @@ import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 import java.util.HashSet;
@@ -21,15 +24,18 @@ import java.util.concurrent.ExecutionException;
 import static org.bukkit.ChatColor.*;
 
 public final class TextGui extends PlayerGui {
-
+	
 	private TextLoader textLoader;
+	private short durability;
 	private Material material;
+	
 
 	public TextGui(TextToBlock plugin, String fontName, String text, Player player, Material material) {
 		super(plugin, 9, DARK_GRAY + "Text Menu");
-
+		
+		this.durability = 0;
 		this.material = material; //Default material
-		textLoader = new TextLoader(plugin, text, fontName, material, player.getLocation());
+		this.textLoader = new TextLoader(plugin, text, fontName, material, player.getLocation());
 
 		setupIcons(plugin);
 	}
@@ -128,12 +134,11 @@ public final class TextGui extends PlayerGui {
 						new ItemBuilder(material)
 								.displayName(YELLOW + "" + BOLD + "Material")
 								.lore("Current: " + GRAY + ITALIC + material.toString().substring(0, 1).toUpperCase() + material.toString().substring(1).toLowerCase().replace("_", " "))
+								.durability(durability)
 								.build(),
 				clickEvent -> {
 					Player clicker = (Player) clickEvent.getWhoClicked();
 					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
-					clicker.closeInventory();
-					//TODO: This will change
 					new MaterialGui(plugin, material, this).open(clicker);
 					update(clicker);
 				});
@@ -180,5 +185,9 @@ public final class TextGui extends PlayerGui {
 
 	public void setMaterial(Material material) {
 		this.material = material;
+	}
+	
+	public void setDurability(short durability) {
+		this.durability = durability;
 	}
 }

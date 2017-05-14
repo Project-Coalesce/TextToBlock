@@ -20,9 +20,10 @@ import java.util.stream.Stream;
 import static org.bukkit.ChatColor.*;
 
 public final class MaterialGui extends PlayerGui {
-
-    private Material selection;
+	
     private int currentPage;
+    private short durability;
+	private Material selection;
 	private final TextGui previousMenu;
 
     private static final int GUI_ROWS = 6;
@@ -37,6 +38,7 @@ public final class MaterialGui extends PlayerGui {
 
         this.selection = selection;
         this.currentPage = 0; //Page numbers start at 0
+		this.durability = 0;
 		this.previousMenu = previousMenu;
 
 		setupControlBar();
@@ -88,7 +90,7 @@ public final class MaterialGui extends PlayerGui {
 					Player clicker = (Player) click.getWhoClicked();
 					clicker.playSound(clicker.getLocation(), ACTION_SOUND, 3, 1);
 					this.previousMenu.setMaterial(selection);
-					System.out.println(this.previousMenu.getMaterial());
+					this.previousMenu.setDurability(durability);
 					this.previousMenu.open(clicker);
 					this.previousMenu.update(clicker);
 				});
@@ -116,8 +118,9 @@ public final class MaterialGui extends PlayerGui {
 		//The currently selected item
 		setItem(49,
 				user -> new ItemBuilder(this.selection)
+						.durability(this.durability)
 						.displayName(YELLOW + this.selection.toString().toLowerCase())
-						//.lore(GRAY + "" + ITALIC + "Durability: " + RESET + this.durability)
+						.lore(GRAY + "Durability: " + RESET + this.durability)
 						.build(),
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
@@ -154,6 +157,7 @@ public final class MaterialGui extends PlayerGui {
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
 					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, 3, 1);
+					new MetadataGui(plugin, durability, this, previousMenu, selection).open(clicker);
 				});
 
 		//Next Page
@@ -186,6 +190,14 @@ public final class MaterialGui extends PlayerGui {
 					update(clicker);
 				});
 
+	}
+	
+	public void setDurability(short durability) {
+		this.durability = durability;
+	}
+	
+	public void setMaterial(Material material) {
+		this.selection = material;
 	}
 
     private void setMaterials(){
@@ -239,7 +251,7 @@ public final class MaterialGui extends PlayerGui {
             final Inventory temp = Bukkit.createInventory(null, 9);
             Stream.of(org.bukkit.Material.values()).filter(material -> {
 
-                if (material.isBlock()){
+                if (material.isSolid()){
 
                     temp.setItem(0, new ItemStack(material));
                     if (temp.getItem(0) == null){

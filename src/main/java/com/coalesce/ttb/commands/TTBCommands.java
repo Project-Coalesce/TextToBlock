@@ -87,6 +87,7 @@ public final class TTBCommands extends CoModule {
 			return;
 		}
 		if (!getSession(context).undo()) context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
+		else context.pluginMessage(ChatColor.GREEN + "Operation successfully undone.");
 		return;
 	}
 	
@@ -98,6 +99,7 @@ public final class TTBCommands extends CoModule {
 			return;
 		}
 		if (!getSession(context).redo()) context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
+		else context.pluginMessage(ChatColor.GREEN + "Operation successfully redone.");
 		return;
 	}
 	
