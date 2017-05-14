@@ -32,14 +32,26 @@ public final class TextToBlock extends CoPlugin implements Listener {
 
 	}
 	
+	/**
+	 * Gets the TextToBlock configuration.
+	 * @return The TextToBlock config.
+	 */
 	public FontsConfig getFontsConfig() {
 		return fontsConfig;
 	}
-
+	
+	/**
+	 * Gets the font loader.
+	 * @return The font loader.
+	 */
 	public FontLoader getFontLoader() {
 		return fontLoader;
 	}
-
+	
+	/**
+	 * Gets the plugin session handler.
+	 * @return The session handler.
+	 */
 	public SessionHolder getSessionHolder() {
 		return sessionHolder;
 	}

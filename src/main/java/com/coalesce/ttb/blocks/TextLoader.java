@@ -23,13 +23,17 @@ public final class TextLoader {
 	private boolean italics = false;
 	private boolean bold = false;
 
-	public TextLoader(TextToBlock plugin, String text, String fontName, Material material, Location origin){
+	public TextLoader(TextToBlock plugin, String text, String fontName, Location origin){
 		this.plugin = plugin;
 		this.text = text;
 		this.fontName = fontName;
 		this.origin = origin;
 	}
-
+	
+	/**
+	 * Gets a set of vectors from the input.
+	 * @return A new Listenable Future for the set of vectors.
+	 */
 	public ListenableFuture<Set<Vector>> getVectors(){
 
 		SettableFuture<Set<Vector>> settableFuture = SettableFuture.create();

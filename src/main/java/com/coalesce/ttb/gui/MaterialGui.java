@@ -32,8 +32,14 @@ public final class MaterialGui extends PlayerGui {
 	private static final Sound ACTION_SOUND = Sound.BLOCK_WOOD_BUTTON_CLICK_ON;
 	private static final Sound INVALID_ACTION_SOUND = Sound.BLOCK_ANVIL_PLACE;
     private static ArrayList<Material> validBuildMaterials;
-
-    public MaterialGui(CoPlugin plugin, Material selection, TextGui previousMenu) {
+	
+	/**
+	 * Creates a MaterialGui for a player.
+	 * @param plugin The providing plugin.
+	 * @param selection The currently selected material.
+	 * @param previousMenu The previous menu.
+	 */
+	public MaterialGui(CoPlugin plugin, Material selection, TextGui previousMenu) {
         super(plugin, GUI_ROWS * 9, DARK_GRAY + "Material Menu");
 
         this.selection = selection;
@@ -192,10 +198,18 @@ public final class MaterialGui extends PlayerGui {
 
 	}
 	
+	/**
+	 * Sets the durability of the material.
+	 * @param durability The material durability.
+	 */
 	public void setDurability(short durability) {
 		this.durability = durability;
 	}
 	
+	/**
+	 * Sets the material.
+	 * @param material The material to select.
+	 */
 	public void setMaterial(Material material) {
 		this.selection = material;
 	}

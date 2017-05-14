@@ -47,8 +47,13 @@ public class FontLoader extends CoModule {
 	protected void onDisable() throws Exception {
 		foundFonts.clear();
 	}
-
-
+	
+	
+	/**
+	 * Loads a font from the font map.
+	 * @param fontName The name of the font you want to load.
+	 * @return A new Listenable Future for the font.
+	 */
 	public ListenableFuture<Font> loadFont(String fontName) {
 		return EXECUTOR.submit(() -> getFont(fontName));
 	}
@@ -66,6 +71,10 @@ public class FontLoader extends CoModule {
 		return null;
 	}
 	
+	/**
+	 * A list of the loaded fonts.
+	 * @return A list of the loaded fonts.
+	 */
 	public List<String> getLoadedFonts() {
 		return fonts;
 	}

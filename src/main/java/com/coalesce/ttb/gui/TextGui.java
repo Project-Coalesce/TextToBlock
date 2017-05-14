@@ -8,6 +8,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -29,13 +30,22 @@ public final class TextGui extends PlayerGui {
 	private short durability;
 	private Material material;
 	
-
+	
+	/**
+	 * Builds a new TextGui for the user.
+	 *
+	 * @param plugin The providing plugin.
+	 * @param fontName The name of the current font.
+	 * @param text The text that is going to be built.
+	 * @param player The player this inventory belongs to.
+	 * @param material The default material.
+	 */
 	public TextGui(TextToBlock plugin, String fontName, String text, Player player, Material material) {
 		super(plugin, 9, DARK_GRAY + "Text Menu");
 		
 		this.durability = 0;
 		this.material = material; //Default material
-		this.textLoader = new TextLoader(plugin, text, fontName, material, player.getLocation());
+		this.textLoader = new TextLoader(plugin, text, fontName, player.getLocation());
 
 		setupIcons(plugin);
 	}
@@ -169,7 +179,9 @@ public final class TextGui extends PlayerGui {
 
 						for (Vector vector : vectors) {
 							cache.add(vector.toLocation(world).getBlock().getState());
-							vector.toLocation(world).getBlock().setType(material);
+							Block block = vector.toLocation(world).getBlock();
+							block.setType(material);
+							block.setData((byte)durability);
 						}
 						plugin.getSessionHolder().getSession((Player) clickEvent.getWhoClicked()).cacheUndo(cache);
 
@@ -178,15 +190,19 @@ public final class TextGui extends PlayerGui {
 				});
 
 	}
-
-	public Material getMaterial() {
-		return material;
-	}
-
+	
+	/**
+	 * Sets the material to turn into text.
+	 * @param material The new material.
+	 */
 	public void setMaterial(Material material) {
 		this.material = material;
 	}
 	
+	/**
+	 * Sets the durability of the material
+	 * @param durability The durability to set the material to.
+	 */
 	public void setDurability(short durability) {
 		this.durability = durability;
 	}

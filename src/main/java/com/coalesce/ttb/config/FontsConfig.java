@@ -1,6 +1,5 @@
 package com.coalesce.ttb.config;
 
-import com.coalesce.config.yml.YamlEntry;
 import com.coalesce.config.yml.YamlConfig;
 import com.coalesce.ttb.TextToBlock;
 import org.bukkit.Material;
@@ -22,42 +21,50 @@ public final class FontsConfig extends YamlConfig {
 		addEntry("operations.historySize", 10);
 	}
 	
+	/**
+	 * Gets the max allowed font size.
+	 * @return The max font size.
+	 */
 	public int getMaxFontSize() {
 		return getInt("font.maxFontSize");
 	}
 	
+	/**
+	 * Sets the max allowed font size.
+	 * @param maxFontSize The new max font size.
+	 */
 	public void setMaxFontSize(int maxFontSize) {
 		getEntry("font.maxFontSize").setValue(maxFontSize);
 	}
 	
+	/**
+	 * Gets the max amount of operations before they begin being cleared.
+	 * @return The max amount of operations saved.
+	 */
 	public int getMaxOperations() {
 		return getInt("operations.historySize");
 	}
 	
+	/**
+	 * Sets the max amount of operations before they begin being cleared.
+	 * @param maxOperations The new max amount of operations.
+	 */
 	public void setMaxOperations(int maxOperations) {
 		getEntry("operations.historySize").setValue(maxOperations);
 	}
 	
-	public String getFallbackFont() {
-		return getString("font.fallbackFont");
-	}
-	
-	public void setFallbackFont(String fallbackFont) {
-		getEntry("font.fallbackFont").setValue(fallbackFont);
-	}
-	
-	public float getFallbackFontSize() {
-		return getInt("font.fallbackFontSize");
-	}
-	
-	public void setFallbackFontSize(float fallbackFontSize) {
-		getEntry("font.fallbackFontSize").setValue(fallbackFontSize);
-	}
-	
+	/**
+	 * Gets the fallback material.
+	 * @return The fallback material.
+	 */
 	public Material getFallbackMaterial() {
 		return Material.valueOf(getString("font.fallbackMaterial"));
 	}
 	
+	/**
+	 * Sets the fallback material.
+	 * @param material The new fallback material.
+	 */
 	public void setFallbackMaterial(Material material) {
 		getEntry("font.fallbackMaterial").setValue(material.name());
 	}
