@@ -23,12 +23,12 @@ import static org.bukkit.ChatColor.*;
 
 public final class TextGui extends PlayerGui {
 	
-	private TextLoader textLoader;
 	private short durability;
 	private Material material;
-	
-	private TextLoader.TextDirection direction;
+	private TextLoader.TextFace face;
 	private final TextToBlock plugin;
+	private final TextLoader textLoader;
+	private TextLoader.TextDirection direction;
 	private static final float SOUND_VOLUME = 3;
 	private static final Sound ACTION_SOUND = Sound.BLOCK_WOOD_BUTTON_CLICK_ON;
 	private static final Sound INVALID_ACTION_SOUND = Sound.BLOCK_ANVIL_PLACE;
@@ -50,6 +50,7 @@ public final class TextGui extends PlayerGui {
 		this.durability = 0;
 		this.material = material; //Default material
 		this.textLoader = new TextLoader(plugin, text, fontName, player.getLocation());
+		this.face = textLoader.getFace();
 		this.direction = textLoader.getDirection();
 
 		setupIcons();
@@ -65,7 +66,7 @@ public final class TextGui extends PlayerGui {
 								.build(),
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
-					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, 3, 1);
+					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, SOUND_VOLUME, 1);
 				});
 
 		//Font
@@ -76,7 +77,7 @@ public final class TextGui extends PlayerGui {
 								.build(),
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
-					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, 3, 1);
+					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, SOUND_VOLUME, 1);
 				});
 
 		//Font size
@@ -113,7 +114,7 @@ public final class TextGui extends PlayerGui {
 					}
 
 					textLoader.setFontSize(fontSize);
-					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
+					clicker.playSound(clicker.getLocation(), ACTION_SOUND, SOUND_VOLUME, 1);
 
 					update(clicker);
 				});
@@ -128,7 +129,7 @@ public final class TextGui extends PlayerGui {
 
 					Player clicker = (Player) clickEvent.getWhoClicked();
 
-					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
+					clicker.playSound(clicker.getLocation(), ACTION_SOUND, SOUND_VOLUME, 1);
 					textLoader.setItalics(!textLoader.isItalics());
 
 					update(clicker);
@@ -144,7 +145,7 @@ public final class TextGui extends PlayerGui {
 
 					Player clicker = (Player) clickEvent.getWhoClicked();
 
-					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
+					clicker.playSound(clicker.getLocation(), ACTION_SOUND, SOUND_VOLUME, 1);
 					textLoader.setBold(!textLoader.isBold());
 
 					update(clicker);
@@ -159,7 +160,7 @@ public final class TextGui extends PlayerGui {
 								.build(),
 				clickEvent -> {
 					Player clicker = (Player) clickEvent.getWhoClicked();
-					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
+					clicker.playSound(clicker.getLocation(), ACTION_SOUND, 3, 1);
 					new MaterialGui(plugin, material, this).open(clicker);
 				});
 		
@@ -167,12 +168,12 @@ public final class TextGui extends PlayerGui {
 		addItem(viewer ->
 						new ItemBuilder(Material.COMPASS)
 								.displayName(YELLOW + "" + BOLD + "Orientation")
-								.lore(GRAY + "Current Direction: " + RESET + direction.name(), GRAY + "Current Face: " + RESET)
+								.lore(GRAY + "Current Direction: " + RESET + direction.name(), GRAY + "Current Face: " + RESET + face.name())
 								.build(),
 				clickEvent -> {
 					Player clicker = (Player) clickEvent.getWhoClicked();
-					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
-					new OrientationGui(plugin, this, material, durability, direction).open(clicker);
+					clicker.playSound(clicker.getLocation(), ACTION_SOUND, 3, 1);
+					new OrientationGui(plugin, this, material, durability, direction, face).open(clicker);
 				});
 
 		setItem(8,
@@ -231,10 +232,19 @@ public final class TextGui extends PlayerGui {
 	
 	/**
 	 * Sets the direction of the text.
-	 * @param orientation The new direction of the text.
+	 * @param direction The new direction of the text.
 	 */
-	public void setDirection(TextLoader.TextDirection orientation) {
-		textLoader.setDirection(orientation);
-		this.direction = orientation;
+	public void setDirection(TextLoader.TextDirection direction) {
+		textLoader.setDirection(direction);
+		this.direction = direction;
+	}
+	
+	/**
+	 * Sets the way the text will face.
+	 * @param face The new face of the text.
+	 */
+	public void setFace(TextLoader.TextFace face) {
+		textLoader.setFace(face);
+		this.face = face;
 	}
 }

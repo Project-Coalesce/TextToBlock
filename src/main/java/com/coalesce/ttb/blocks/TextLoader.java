@@ -20,10 +20,12 @@ public final class TextLoader {
 	private float fontSize = 12;
 	private String fontName;
 	private Location origin;
+	private TextFace face;
 	private String text;
 
 	public TextLoader(TextToBlock plugin, String text, String fontName, Location origin){
 		this.direction = TextDirection.NORTH;
+		this.face = TextFace.FORWARD;
 		this.fontName = fontName;
 		this.plugin = plugin;
 		this.origin = origin;
@@ -75,7 +77,7 @@ public final class TextLoader {
 						int realY = height - y;
 						textVectors.add(originVector.clone()
 								.add(direction.xDelta.clone().multiply(x))
-								.add(direction.yDelta.clone().multiply(realY)));
+								.add(face.yDelta.clone().multiply(realY)));
 
 						sb.append("X ");
 					} else {
@@ -113,63 +115,131 @@ public final class TextLoader {
 
 		return bufferedImage;
 	}
-
-	private TextToBlock getPlugin() {
-		return plugin;
-	}
-
+	
+	/**
+	 * Checks if the text generated is emboldened.
+	 * @return True if in bold, false otherwise.
+	 */
 	public boolean isBold() {
 		return bold;
 	}
-
+	
+	/**
+	 * Sets the text to bold or not.
+	 * @param bold True emboldens the text, false does the opposite.
+	 */
 	public void setBold(boolean bold) {
 		this.bold = bold;
 	}
-
+	
+	/**
+	 * Checks if the text is italicised.
+	 * @return True if italicised, false otherwise.
+	 */
 	public boolean isItalics() {
 		return italics;
 	}
-
+	
+	/**
+	 * Sets the text to italics or not.
+	 * @param italics True italicises the text, false does the opposite.
+	 */
 	public void setItalics(boolean italics) {
 		this.italics = italics;
 	}
-
+	
+	/**
+	 * Gets the current font size of the text.
+	 * @return The text font size.
+	 */
 	public float getFontSize() {
 		return fontSize;
 	}
-
+	
+	/**
+	 * Sets the font size of the text.
+	 * @param fontSize
+	 */
 	public void setFontSize(float fontSize) {
 		this.fontSize = fontSize;
 	}
-
+	
+	/**
+	 * Gets the name of the font being used.
+	 * @return The font being used.
+	 */
 	public String getFontName() {
 		return fontName;
 	}
-
+	
+	/**
+	 * Sets the font being used.
+	 * @param fontName The font to be used.
+	 */
 	public void setFontName(String fontName) {
 		this.fontName = fontName;
 	}
-
+	
+	/**
+	 * Gets the text to be rendered.
+	 * @return The text to be rendered.
+	 */
 	public String getText() {
 		return text;
 	}
-
+	
+	/**
+	 * Sets the text to be rendered.
+	 * @param text The text to be rendered.
+	 */
 	public void setText(String text) {
 		this.text = text;
 	}
-
+	
+	/**
+	 * Gets the direction of the text.
+	 * @return The text direction.
+	 */
 	public TextDirection getDirection() {
 		return direction;
 	}
-
-	public void setDirection(TextDirection orientation) {
-		this.direction = orientation;
+	
+	/**
+	 * Sets the direction of the text.
+	 * @param direction The new text direction.
+	 */
+	public void setDirection(TextDirection direction) {
+		this.direction = direction;
 	}
-
+	
+	/**
+	 * Gets the way the text is facing.
+	 * @return Gets the way the text is currently facing.
+	 */
+	public TextFace getFace() {
+		return face;
+	}
+	
+	/**
+	 * Sets the way the text is facing.
+	 * @param face The new text face.
+	 */
+	public void setFace(TextFace face) {
+		this.face = face;
+	}
+	
+	/**
+	 * Gets the origin location for this text to render.
+	 * @return The text origin.
+	 */
 	public Location getOrigin() {
 		return origin;
 	}
-
+	
+	/**
+	 * Sets the origin location to render the text.
+	 * @param origin The new text origin.
+	 */
 	public void setOrigin(Location origin) {
 		this.origin = origin;
 	}
@@ -177,17 +247,28 @@ public final class TextLoader {
 
 	public enum TextDirection {
 
-		NORTH(	new Vector(0, 0, -1), 	new Vector(0, 1, 0)),
-		WEST(	new Vector(-1, 0, 0), 	new Vector(0, 1, 0)),
-		SOUTH(	new Vector(0, 0, 1), 	new Vector(0, 1, 0)),
-		EAST(	new Vector(1, 0, 0), 	new Vector(0, 1, 0));
-
-		//The change every time the x or y is increased in the image
+		NORTH(	new Vector(0, 0, -1)),
+		WEST(	new Vector(-1, 0, 0)),
+		SOUTH(	new Vector(0, 0, 1)),
+		EAST(	new Vector(1, 0, 0));
+		
 		private Vector xDelta;
-		private Vector yDelta;
 
-		TextDirection(Vector xDelta, Vector yDelta) {
+		TextDirection(Vector xDelta) {
 			this.xDelta = xDelta;
+		}
+	}
+	
+	public enum TextFace {
+		
+		UPWARD(		new Vector(-1, 0, 0)),
+		DOWNWARD(	new Vector(1, 0, 0)),
+		FORWARD(	new Vector(0, 1, 0)),
+		BACKWARD(	new Vector(0, -1, 0));
+		
+		private Vector yDelta;
+		
+		TextFace(Vector yDelta) {
 			this.yDelta = yDelta;
 		}
 	}
