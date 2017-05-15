@@ -4,7 +4,6 @@ import com.coalesce.ttb.TextToBlock;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.util.Vector;
 
 import java.awt.*;
@@ -13,21 +12,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class TextLoader {
-
-	private TextToBlock plugin;
-	private Location origin;
-	private TextLoader.TextOrientation orientation = TextOrientation.NORTH;
-	private String text;
-	private String fontName;
-	private float fontSize = 12;
+	
+	private TextDirection direction;
+	private final TextToBlock plugin;
 	private boolean italics = false;
 	private boolean bold = false;
+	private float fontSize = 12;
+	private String fontName;
+	private Location origin;
+	private String text;
 
 	public TextLoader(TextToBlock plugin, String text, String fontName, Location origin){
-		this.plugin = plugin;
-		this.text = text;
+		this.direction = TextDirection.NORTH;
 		this.fontName = fontName;
+		this.plugin = plugin;
 		this.origin = origin;
+		this.text = text;
 	}
 	
 	/**
@@ -74,8 +74,8 @@ public final class TextLoader {
 						//Invert the heights, because the text normally renders upside down
 						int realY = height - y;
 						textVectors.add(originVector.clone()
-								.add(orientation.xDelta.clone().multiply(x))
-								.add(orientation.yDelta.clone().multiply(realY)));
+								.add(direction.xDelta.clone().multiply(x))
+								.add(direction.yDelta.clone().multiply(realY)));
 
 						sb.append("X ");
 					} else {
@@ -158,12 +158,12 @@ public final class TextLoader {
 		this.text = text;
 	}
 
-	public TextOrientation getOrientation() {
-		return orientation;
+	public TextDirection getDirection() {
+		return direction;
 	}
 
-	public void setOrientation(TextOrientation orientation) {
-		this.orientation = orientation;
+	public void setDirection(TextDirection orientation) {
+		this.direction = orientation;
 	}
 
 	public Location getOrigin() {
@@ -175,7 +175,7 @@ public final class TextLoader {
 	}
 
 
-	public enum TextOrientation {
+	public enum TextDirection {
 
 		NORTH(	new Vector(0, 0, -1), 	new Vector(0, 1, 0)),
 		WEST(	new Vector(-1, 0, 0), 	new Vector(0, 1, 0)),
@@ -186,10 +186,9 @@ public final class TextLoader {
 		private Vector xDelta;
 		private Vector yDelta;
 
-		TextOrientation(Vector xDelta, Vector yDelta) {
+		TextDirection(Vector xDelta, Vector yDelta) {
 			this.xDelta = xDelta;
 			this.yDelta = yDelta;
 		}
 	}
-
 }

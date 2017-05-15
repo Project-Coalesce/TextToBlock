@@ -13,9 +13,6 @@ import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 import java.util.HashSet;
@@ -30,6 +27,12 @@ public final class TextGui extends PlayerGui {
 	private short durability;
 	private Material material;
 	
+	private TextLoader.TextDirection direction;
+	private final TextToBlock plugin;
+	private static final float SOUND_VOLUME = 3;
+	private static final Sound ACTION_SOUND = Sound.BLOCK_WOOD_BUTTON_CLICK_ON;
+	private static final Sound INVALID_ACTION_SOUND = Sound.BLOCK_ANVIL_PLACE;
+	
 	
 	/**
 	 * Builds a new TextGui for the user.
@@ -43,36 +46,44 @@ public final class TextGui extends PlayerGui {
 	public TextGui(TextToBlock plugin, String fontName, String text, Player player, Material material) {
 		super(plugin, 9, DARK_GRAY + "Text Menu");
 		
+		this.plugin = plugin;
 		this.durability = 0;
 		this.material = material; //Default material
 		this.textLoader = new TextLoader(plugin, text, fontName, player.getLocation());
+		this.direction = textLoader.getDirection();
 
-		setupIcons(plugin);
+		setupIcons();
 	}
 
-	private void setupIcons(TextToBlock plugin){
+	private void setupIcons(){
 
 		//Text
 		addItem(viewer ->
 						new ItemBuilder(Material.BOOK)
 								.displayName(YELLOW + "" + BOLD + "Text")
-								.lore("Current Text: " + GRAY + ITALIC + textLoader.getText())
-								.build()
-				, null);
+								.lore(GRAY + "Current Text: " + RESET + textLoader.getText())
+								.build(),
+				click -> {
+					Player clicker = (Player) click.getWhoClicked();
+					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, 3, 1);
+				});
 
 		//Font
 		addItem(viewer ->
 						new ItemBuilder(Material.PAPER)
 								.displayName(YELLOW + "" + BOLD + "Font")
-								.lore(WHITE + "Current Font: " + GRAY + ITALIC + textLoader.getFontName())
-								.build()
-				, null);
+								.lore(GRAY + "Current Font: " + RESET + textLoader.getFontName())
+								.build(),
+				click -> {
+					Player clicker = (Player) click.getWhoClicked();
+					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, 3, 1);
+				});
 
 		//Font size
 		addItem(viewer ->
-						new ItemBuilder(Material.PAPER)
+						new ItemBuilder(Material.EMERALD)
 								.displayName(YELLOW + "" + BOLD + "Font Size")
-								.lore(WHITE + "Current Font Size: " + GRAY + ITALIC + textLoader.getFontSize())
+								.lore(GRAY + "Current Font Size: " + RESET + textLoader.getFontSize())
 								.build(),
 
 				clickEvent -> {
@@ -109,7 +120,7 @@ public final class TextGui extends PlayerGui {
 
 		//Italics
 		addItem(viewer ->
-						new ItemBuilder(Material.PAPER)
+						new ItemBuilder(Material.NETHER_STAR)
 								.displayName(YELLOW + "" + BOLD + "Italics")
 								.lore(textLoader.isItalics() ? GREEN + "True" : RED + "False")
 								.build(),
@@ -125,7 +136,7 @@ public final class TextGui extends PlayerGui {
 
 		//Bold
 		addItem(viewer ->
-						new ItemBuilder(Material.PAPER)
+						new ItemBuilder(Material.NETHER_STAR)
 								.displayName(YELLOW + "" + BOLD + "Bold")
 								.lore(textLoader.isBold() ? GREEN + "True" : RED + "False")
 								.build(),
@@ -139,18 +150,29 @@ public final class TextGui extends PlayerGui {
 					update(clicker);
 				});
 
-		//Material viewer
+		//Material Menu
 		addItem(viewer ->
 						new ItemBuilder(material)
 								.displayName(YELLOW + "" + BOLD + "Material")
-								.lore("Current: " + GRAY + ITALIC + material.toString().substring(0, 1).toUpperCase() + material.toString().substring(1).toLowerCase().replace("_", " "))
+								.lore(GRAY + "Current: " + RESET + material.toString().substring(0, 1).toUpperCase() + material.toString().substring(1).toLowerCase().replace("_", " "))
 								.durability(durability)
 								.build(),
 				clickEvent -> {
 					Player clicker = (Player) clickEvent.getWhoClicked();
 					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
 					new MaterialGui(plugin, material, this).open(clicker);
-					update(clicker);
+				});
+		
+		//Orientation Menu
+		addItem(viewer ->
+						new ItemBuilder(Material.COMPASS)
+								.displayName(YELLOW + "" + BOLD + "Orientation")
+								.lore(GRAY + "Current Direction: " + RESET + direction.name(), GRAY + "Current Face: " + RESET)
+								.build(),
+				clickEvent -> {
+					Player clicker = (Player) clickEvent.getWhoClicked();
+					clicker.playSound(clicker.getLocation(), Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 3, 1);
+					new OrientationGui(plugin, this, material, durability, direction).open(clicker);
 				});
 
 		setItem(8,
@@ -205,5 +227,14 @@ public final class TextGui extends PlayerGui {
 	 */
 	public void setDurability(short durability) {
 		this.durability = durability;
+	}
+	
+	/**
+	 * Sets the direction of the text.
+	 * @param orientation The new direction of the text.
+	 */
+	public void setDirection(TextLoader.TextDirection orientation) {
+		textLoader.setDirection(orientation);
+		this.direction = orientation;
 	}
 }
