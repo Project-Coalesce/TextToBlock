@@ -52,12 +52,12 @@ public final class TextGui extends PlayerGui {
 		this.textLoader = new TextLoader(plugin, text, fontName, player.getLocation());
 		this.face = textLoader.getFace();
 		this.direction = textLoader.getDirection();
-
+		
 		setupIcons();
 	}
-
+	
 	private void setupIcons(){
-
+		
 		//Text
 		addItem(viewer ->
 						new ItemBuilder(Material.BOOK)
@@ -68,7 +68,7 @@ public final class TextGui extends PlayerGui {
 					Player clicker = (Player) click.getWhoClicked();
 					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, SOUND_VOLUME, 1);
 				});
-
+		
 		//Font
 		addItem(viewer ->
 						new ItemBuilder(Material.PAPER)
@@ -79,46 +79,46 @@ public final class TextGui extends PlayerGui {
 					Player clicker = (Player) click.getWhoClicked();
 					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, SOUND_VOLUME, 1);
 				});
-
+		
 		//Font size
 		addItem(viewer ->
 						new ItemBuilder(Material.EMERALD)
 								.displayName(YELLOW + "" + BOLD + "Font Size")
 								.lore(GRAY + "Current Font Size: " + RESET + textLoader.getFontSize())
 								.build(),
-
+				
 				clickEvent -> {
-
+					
 					Player clicker = (Player) clickEvent.getWhoClicked();
 					float fontSize = textLoader.getFontSize();
-
+					
 					switch (clickEvent.getClick()){
-						case RIGHT:
-							fontSize--;
-							break;
-						case SHIFT_RIGHT:
-							fontSize -= 10;
-							break;
-						case LEFT:
-							fontSize++;
-							break;
-						case SHIFT_LEFT:
-							fontSize += 10;
-							break;
+					case RIGHT:
+						fontSize--;
+						break;
+					case SHIFT_RIGHT:
+						fontSize -= 10;
+						break;
+					case LEFT:
+						fontSize++;
+						break;
+					case SHIFT_LEFT:
+						fontSize += 10;
+						break;
 					}
-
+					
 					if (fontSize < 6){
 						fontSize = 6;
 					} else if (fontSize > plugin.getFontsConfig().getMaxFontSize()){
 						fontSize = plugin.getFontsConfig().getMaxFontSize();
 					}
-
+					
 					textLoader.setFontSize(fontSize);
 					clicker.playSound(clicker.getLocation(), ACTION_SOUND, SOUND_VOLUME, 1);
-
+					
 					update(clicker);
 				});
-
+		
 		//Italics
 		addItem(viewer ->
 						new ItemBuilder(Material.NETHER_STAR)
@@ -126,15 +126,15 @@ public final class TextGui extends PlayerGui {
 								.lore(textLoader.isItalics() ? GREEN + "True" : RED + "False")
 								.build(),
 				clickEvent -> {
-
+					
 					Player clicker = (Player) clickEvent.getWhoClicked();
-
+					
 					clicker.playSound(clicker.getLocation(), ACTION_SOUND, SOUND_VOLUME, 1);
 					textLoader.setItalics(!textLoader.isItalics());
-
+					
 					update(clicker);
 				});
-
+		
 		//Bold
 		addItem(viewer ->
 						new ItemBuilder(Material.NETHER_STAR)
@@ -142,15 +142,15 @@ public final class TextGui extends PlayerGui {
 								.lore(textLoader.isBold() ? GREEN + "True" : RED + "False")
 								.build(),
 				clickEvent -> {
-
+					
 					Player clicker = (Player) clickEvent.getWhoClicked();
-
+					
 					clicker.playSound(clicker.getLocation(), ACTION_SOUND, SOUND_VOLUME, 1);
 					textLoader.setBold(!textLoader.isBold());
-
+					
 					update(clicker);
 				});
-
+		
 		//Material Menu
 		addItem(viewer ->
 						new ItemBuilder(material)
@@ -175,7 +175,7 @@ public final class TextGui extends PlayerGui {
 					clicker.playSound(clicker.getLocation(), ACTION_SOUND, 3, 1);
 					new OrientationGui(plugin, this, material, durability, direction, face).open(clicker);
 				});
-
+		
 		setItem(8,
 				viewer ->
 						new ItemBuilder(Material.CLAY_BRICK)
@@ -185,21 +185,21 @@ public final class TextGui extends PlayerGui {
 								.enchant(Enchantment.DURABILITY, 1)
 								.build(),
 				clickEvent -> {
-
+					
 					Set<BlockState> cache = new HashSet<>();
 					ListenableFuture<Set<Vector>> futureVectors = textLoader.getVectors();
-
+					
 					futureVectors.addListener(() -> {
-
+						
 						Set<Vector> vectors = new HashSet<>();
 						try {
 							vectors = futureVectors.get();
 						} catch (InterruptedException | ExecutionException e) {
 							e.printStackTrace();
 						}
-
+						
 						World world = textLoader.getOrigin().getWorld();
-
+						
 						for (Vector vector : vectors) {
 							cache.add(vector.toLocation(world).getBlock().getState());
 							Block block = vector.toLocation(world).getBlock();
@@ -207,11 +207,11 @@ public final class TextGui extends PlayerGui {
 							block.setData((byte)durability);
 						}
 						plugin.getSessionHolder().getSession((Player) clickEvent.getWhoClicked()).cacheUndo(cache);
-
+						
 					}, runnable -> plugin.getServer().getScheduler().runTask(plugin, runnable));
-
+					
 				});
-
+		
 	}
 	
 	/**

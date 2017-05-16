@@ -22,7 +22,7 @@ public final class TextLoader {
 	private Location origin;
 	private TextFace face;
 	private String text;
-
+	
 	public TextLoader(TextToBlock plugin, String text, String fontName, Location origin){
 		this.direction = TextDirection.NORTH;
 		this.face = TextFace.FORWARD;
@@ -37,9 +37,9 @@ public final class TextLoader {
 	 * @return A new Listenable Future for the set of vectors.
 	 */
 	public ListenableFuture<Set<Vector>> getVectors(){
-
+		
 		SettableFuture<Set<Vector>> settableFuture = SettableFuture.create();
-
+		
 		ListenableFuture<Font> fontFuture = plugin.getFontLoader().loadFont(fontName);
 		fontFuture.addListener(() -> {
 			
@@ -47,30 +47,30 @@ public final class TextLoader {
 			Font font = null;
 			try {
 				font = fontFuture.get();
-
+				
 			} catch (Exception e){
 				e.printStackTrace();
 			}
-
+			
 			//Setup basic font stuff
 			font = font.deriveFont(fontSize);
 			if (bold) font = font.deriveFont(Font.BOLD);
 			if (italics) font = font.deriveFont(Font.ITALIC);
-
+			
 			//Generate image
 			BufferedImage image = generateImage(font);
-
+			
 			//Setup variables
 			Vector originVector = origin.toVector();
 			Set<Vector> textVectors = new HashSet<>();
 			int height = image.getHeight();
 			int width = image.getWidth();
-
+			
 			for (int y = image.getMinY(); y < height; y++) {
 				StringBuilder sb = new StringBuilder();
-
+				
 				for (int x = image.getMinX(); x < width; x++) {
-
+					
 					// White (0) is the background. Anything else is a pixel we want
 					if (image.getRGB(x, y) != 0) {
 						//Invert the heights, because the text normally renders upside down
@@ -78,41 +78,41 @@ public final class TextLoader {
 						textVectors.add(originVector.clone()
 								.add(direction.xDelta.clone().multiply(x))
 								.add(face.yDelta.clone().multiply(realY)));
-
+						
 						sb.append("X ");
 					} else {
 						sb.append(". ");
 					}
-
+					
 				}
 				System.out.println(sb.toString());
 			}
-
+			
 			settableFuture.set(textVectors);
-
+			
 		}, runnable -> plugin.getServer().getScheduler().runTask(plugin, runnable));
-
-
+		
+		
 		return settableFuture;
 	}
-
+	
 	private BufferedImage generateImage(Font font){
-
+		
 		Graphics g = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB).getGraphics();
 		g.setFont(font);
 		FontMetrics metrics = g.getFontMetrics();
-
+		
 		int width = metrics.stringWidth(text);
 		int height = metrics.getAscent() + metrics.getDescent();
-
+		
 		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
+		
 		Graphics2D imageGraphics = bufferedImage.createGraphics();
 		imageGraphics.setFont(font);
 		imageGraphics.setColor(Color.BLACK);
 		imageGraphics.drawString(text, 0, height - metrics.getDescent());
 		imageGraphics.dispose();
-
+		
 		return bufferedImage;
 	}
 	
@@ -243,17 +243,17 @@ public final class TextLoader {
 	public void setOrigin(Location origin) {
 		this.origin = origin;
 	}
-
-
+	
+	
 	public enum TextDirection {
-
+		
 		NORTH(	new Vector(0, 0, -1)),
 		WEST(	new Vector(-1, 0, 0)),
 		SOUTH(	new Vector(0, 0, 1)),
 		EAST(	new Vector(1, 0, 0));
 		
 		private Vector xDelta;
-
+		
 		TextDirection(Vector xDelta) {
 			this.xDelta = xDelta;
 		}

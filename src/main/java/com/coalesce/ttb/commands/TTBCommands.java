@@ -26,6 +26,15 @@ public final class TTBCommands extends CoModule {
 
 	@Override
 	protected void onEnable() throws Exception {
+		CoCommand textCommand = new CommandBuilder(plugin, "text")
+				.executor(this::text)
+				.usage("/text <font> <message>")
+				.description("Generates text from a TTF file.")
+				.permission("ttb.generate")
+				.minArgs(2)
+				.playerOnly()
+				.build();
+
 		CoCommand undoCommand = new CommandBuilder(plugin, "textundo")
 				.executor(this::undo)
 				.maxArgs(0)
@@ -41,16 +50,6 @@ public final class TTBCommands extends CoModule {
 				.permission("ttb.undo")
 				.usage("/textredo")
 				.description("Redoes a previously undone font generation.")
-				.playerOnly()
-				.build();
-		
-		CoCommand textCommand = new CommandBuilder(plugin, "text")
-				.executor(this::text)
-				.completer(this::fontCompleter)
-				.usage("/text <font> <message>")
-				.description("Generates text from a TTF file.")
-				.permission("ttb.generate")
-				.minArgs(2)
 				.playerOnly()
 				.build();
 		
@@ -83,7 +82,7 @@ public final class TTBCommands extends CoModule {
 	
 	private void undo(CommandContext context) {
 		if (getSession(context) == null) {
-			context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
+			context.send(ChatColor.RED + "Cannot perform operation.");
 			return;
 		}
 		if (!getSession(context).undo()) context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
@@ -95,7 +94,7 @@ public final class TTBCommands extends CoModule {
 	
 	private void redo(CommandContext context) {
 		if (getSession(context) == null) {
-			context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
+			context.send(ChatColor.RED + "Cannot perform operation.");
 			return;
 		}
 		if (!getSession(context).redo()) context.pluginMessage(ChatColor.RED + "Cannot perform operation.");
