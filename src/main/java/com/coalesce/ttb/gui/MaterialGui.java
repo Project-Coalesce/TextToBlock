@@ -35,6 +35,7 @@ public final class MaterialGui extends PlayerGui {
 	
 	/**
 	 * Creates a MaterialGui for a player.
+	 *
 	 * @param plugin The providing plugin.
 	 * @param selection The currently selected material.
 	 * @param previousMenu The previous menu.
