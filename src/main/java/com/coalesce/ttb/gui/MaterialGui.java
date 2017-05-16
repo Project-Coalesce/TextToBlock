@@ -94,7 +94,7 @@ public final class MaterialGui extends PlayerGui {
 						.build(),
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
-					clicker.playSound(clicker.getLocation(), ACTION_SOUND, 3, 1);
+					clicker.playSound(clicker.getLocation(), ACTION_SOUND, SOUND_VOLUME, 1);
 					this.previousMenu.setMaterial(selection);
 					this.previousMenu.setDurability(durability);
 					this.previousMenu.open(clicker);
@@ -108,7 +108,7 @@ public final class MaterialGui extends PlayerGui {
 						.build(),
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
-					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, 3, 1);
+					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, SOUND_VOLUME, 1);
 				});
 
 		//Filler
@@ -118,7 +118,7 @@ public final class MaterialGui extends PlayerGui {
 						.build(),
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
-					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, 3, 1);
+					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, SOUND_VOLUME, 1);
 				});
 
 		//The currently selected item
@@ -130,7 +130,7 @@ public final class MaterialGui extends PlayerGui {
 						.build(),
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
-					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, 3, 1);
+					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, SOUND_VOLUME, 1);
 				});
 
 		//Filler
@@ -140,7 +140,7 @@ public final class MaterialGui extends PlayerGui {
 						.build(),
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
-					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, 3, 1);
+					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, SOUND_VOLUME, 1);
 				});
 
 		//Filler
@@ -150,7 +150,7 @@ public final class MaterialGui extends PlayerGui {
 						.build(),
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
-					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, 3, 1);
+					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, SOUND_VOLUME, 1);
 				});
 
 		//Durability Editor
@@ -162,7 +162,7 @@ public final class MaterialGui extends PlayerGui {
 						.build(),
 				click -> {
 					Player clicker = (Player) click.getWhoClicked();
-					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, 3, 1);
+					clicker.playSound(clicker.getLocation(), INVALID_ACTION_SOUND, SOUND_VOLUME, 1);
 					new MetadataGui(plugin, durability, this, previousMenu, selection).open(clicker);
 				});
 
