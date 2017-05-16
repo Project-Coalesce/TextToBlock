@@ -14,9 +14,9 @@ import org.bukkit.ChatColor;
 import java.util.List;
 
 public final class TTBCommands extends CoModule {
-
-	private SessionHolder session;
-	private TextToBlock plugin;
+	
+	private final TextToBlock plugin;
+	private final SessionHolder session;
 
 	public TTBCommands(TextToBlock plugin) {
 		super(plugin, "TextToBlock Commands");
