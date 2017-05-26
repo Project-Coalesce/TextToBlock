@@ -3,8 +3,7 @@ package com.coalesce.ttb.commands;
 import com.coalesce.command.CoCommand;
 import com.coalesce.command.CommandBuilder;
 import com.coalesce.command.CommandContext;
-import com.coalesce.command.base.ICommandContext;
-import com.coalesce.command.base.ITabContext;
+import com.coalesce.command.tabcomplete.TabContext;
 import com.coalesce.plugin.CoModule;
 import com.coalesce.ttb.TextToBlock;
 import com.coalesce.ttb.gui.TextGui;
@@ -75,7 +74,7 @@ public final class TTBCommands extends CoModule {
 		new TextGui(plugin, fontName, text, context.asPlayer(), plugin.getFontsConfig().getFallbackMaterial()).open(context.asPlayer());
 	}
 	
-	private void fontCompleter(ITabContext context) {
+	private void fontCompleter(TabContext context) {
 		List<String> fonts = plugin.getFontLoader().getLoadedFonts();
 		context.completionAt(0, fonts.toArray(new String[fonts.size()]));
 	}
@@ -106,7 +105,7 @@ public final class TTBCommands extends CoModule {
 	
 	
 	
-	private TextSession getSession(ICommandContext context) {
+	private TextSession getSession(CommandContext context) {
 		return session.getSession(context.asPlayer());
 	}
 }
