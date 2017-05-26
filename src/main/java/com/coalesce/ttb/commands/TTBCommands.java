@@ -3,7 +3,8 @@ package com.coalesce.ttb.commands;
 import com.coalesce.command.CoCommand;
 import com.coalesce.command.CommandBuilder;
 import com.coalesce.command.CommandContext;
-import com.coalesce.command.tabcomplete.TabContext;
+import com.coalesce.command.base.ICommandContext;
+import com.coalesce.command.base.ITabContext;
 import com.coalesce.plugin.CoModule;
 import com.coalesce.ttb.TextToBlock;
 import com.coalesce.ttb.gui.TextGui;
@@ -28,6 +29,7 @@ public final class TTBCommands extends CoModule {
 	protected void onEnable() throws Exception {
 		CoCommand textCommand = new CommandBuilder(plugin, "text")
 				.executor(this::text)
+				.completer(this::fontCompleter)
 				.usage("/text <font> <message>")
 				.description("Generates text from a TTF file.")
 				.permission("ttb.generate")
@@ -73,7 +75,7 @@ public final class TTBCommands extends CoModule {
 		new TextGui(plugin, fontName, text, context.asPlayer(), plugin.getFontsConfig().getFallbackMaterial()).open(context.asPlayer());
 	}
 	
-	private void fontCompleter(TabContext context) {
+	private void fontCompleter(ITabContext context) {
 		List<String> fonts = plugin.getFontLoader().getLoadedFonts();
 		context.completionAt(0, fonts.toArray(new String[fonts.size()]));
 	}
@@ -104,7 +106,7 @@ public final class TTBCommands extends CoModule {
 	
 	
 	
-	private TextSession getSession(CommandContext context) {
+	private TextSession getSession(ICommandContext context) {
 		return session.getSession(context.asPlayer());
 	}
 }
