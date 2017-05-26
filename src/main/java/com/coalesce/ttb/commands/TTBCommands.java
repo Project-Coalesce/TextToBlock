@@ -28,6 +28,7 @@ public final class TTBCommands extends CoModule {
 	protected void onEnable() throws Exception {
 		CoCommand textCommand = new CommandBuilder(plugin, "text")
 				.executor(this::text)
+				.completer(this::fontCompleter)
 				.usage("/text <font> <message>")
 				.description("Generates text from a TTF file.")
 				.permission("ttb.generate")
