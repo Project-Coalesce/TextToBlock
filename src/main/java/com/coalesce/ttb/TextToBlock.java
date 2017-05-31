@@ -19,6 +19,7 @@ public final class TextToBlock extends CoPlugin implements Listener {
 
 	@Override
 	public void onPluginEnable() throws Exception {
+		updateCheck("Project-Coalesce", "TextToBlock", true);
 		fontsConfig = new FontsConfig(this);
 
 		addModules(
