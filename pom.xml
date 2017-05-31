@@ -24,8 +24,8 @@
         <!--Core-->
         <dependency>
             <groupId>com.coalesce</groupId>
-            <artifactId>core</artifactId>
-            <version>1.0</version>
+            <artifactId>CoalesceCore</artifactId>
+            <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
 
