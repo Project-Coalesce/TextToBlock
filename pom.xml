@@ -7,7 +7,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>com.coalesce</groupId>
-        <version>1.0.0</version>
+        <version>1.0</version>
         <relativePath>../Core/pom.xml</relativePath>
     </parent>
 
