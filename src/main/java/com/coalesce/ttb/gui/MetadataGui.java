@@ -9,8 +9,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 
-import java.util.ArrayList;
-
 import static org.bukkit.ChatColor.*;
 
 public final class MetadataGui extends PlayerGui {
