@@ -40,8 +40,8 @@ public class FontLoader extends CoModule {
 		if (fontFiles == null) return;
 		
 		Stream.of(fontFiles).forEach(file -> {
-			foundFonts.put(file.getName().split("\\.")[0].toLowerCase(), file);
-			fonts.add(file.getName().split("\\.")[0].toLowerCase());
+			foundFonts.put(file.getName().split("\\.")[0].toLowerCase().replace(" ", "_"), file);
+			fonts.add(file.getName().split("\\.")[0].toLowerCase().replace(" ", "_"));
 		});
 	}
 

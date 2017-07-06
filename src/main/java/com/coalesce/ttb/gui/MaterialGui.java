@@ -269,8 +269,8 @@ public final class MaterialGui extends PlayerGui {
                 if (material.isSolid()){
 
                     temp.setItem(0, new ItemStack(material));
-					return temp.getItem(0) == null;
-                }
+					return temp.getItem(0) != null;
+				}
 
                 return false;
 
